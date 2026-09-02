@@ -1,0 +1,1212 @@
+<title>Dar Darija</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Dar Darija — apprendre le darija a l'oreille */
+
+:root{
+  --paper:#F1F4F0;
+  --surface:#FFFFFF;
+  --surface-2:#E6ECE6;
+  --ink:#10302A;
+  --ink-soft:#4E635C;
+  --ink-faint:#82968F;
+  --line:#D3DED4;
+  --accent:#0F7B5F;
+  --accent-soft:#DCEDE4;
+  --accent-ink:#0A5643;
+  --saffron:#A9711A;
+  --saffron-soft:#F2E6C9;
+  --blue:#2E4BA8;
+  --danger:#A33A2A;
+  --on-accent:#FFFFFF;
+  --shadow:0 1px 2px rgba(16,48,42,.06), 0 10px 26px -14px rgba(16,48,42,.28);
+  --radius:14px;
+  --f-display:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --f-ui:"Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --f-ar:"Noto Naskh Arabic", "Geeza Pro", "Segoe UI", serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0B1A17;
+    --surface:#12241F;
+    --surface-2:#1B302A;
+    --ink:#E7EFE9;
+    --ink-soft:#A6BAB2;
+    --ink-faint:#71877F;
+    --line:#26403A;
+    --accent:#3FB78E;
+    --accent-soft:#183A31;
+    --accent-ink:#8AD9BC;
+    --saffron:#E0AE5E;
+    --saffron-soft:#33291534;
+    --blue:#8FA5F0;
+    --danger:#E08573;
+    --on-accent:#06211A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 26px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0B1A17;
+  --surface:#12241F;
+  --surface-2:#1B302A;
+  --ink:#E7EFE9;
+  --ink-soft:#A6BAB2;
+  --ink-faint:#71877F;
+  --line:#26403A;
+  --accent:#3FB78E;
+  --accent-soft:#183A31;
+  --accent-ink:#8AD9BC;
+  --saffron:#E0AE5E;
+  --saffron-soft:#332915;
+  --blue:#8FA5F0;
+  --danger:#E08573;
+  --on-accent:#06211A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 26px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-ui);
+  font-size:16px;
+  line-height:1.5;
+  -webkit-text-size-adjust:100%;
+  padding-bottom:calc(74px + env(safe-area-inset-bottom,0px));
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+.wrap{max-width:560px;margin:0 auto;padding:0 18px}
+
+/* ---------- entete ---------- */
+.topbar{
+  position:sticky;top:0;z-index:30;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar .wrap{display:flex;align-items:center;gap:10px;height:56px}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--f-display);font-size:1.42rem;line-height:1;letter-spacing:.2px}
+.brand svg{width:22px;height:22px;flex:none;color:var(--accent)}
+.topbar .spacer{flex:1}
+.streak{
+  display:flex;align-items:center;gap:6px;
+  font-size:.8rem;font-weight:600;color:var(--saffron);
+  background:var(--saffron-soft);border-radius:999px;padding:5px 11px;
+  font-variant-numeric:tabular-nums;
+}
+.iconbtn{
+  border:1px solid var(--line);background:var(--surface);border-radius:10px;
+  width:36px;height:36px;display:grid;place-items:center;padding:0;color:var(--ink-soft);
+}
+
+/* ---------- structure de page ---------- */
+.view{display:none;padding:22px 0 40px}
+.view.on{display:block}
+.eyebrow{
+  font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-faint);margin:0 0 6px;
+}
+h1{font-family:var(--f-display);font-weight:400;font-size:2.1rem;line-height:1.08;margin:0 0 8px;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:400;font-size:1.5rem;line-height:1.15;margin:0 0 10px;text-wrap:balance}
+h3{font-size:1rem;font-weight:700;margin:0 0 4px}
+p{margin:0 0 12px;color:var(--ink-soft);max-width:62ch}
+p.lead{color:var(--ink);font-size:1.02rem}
+a{color:var(--accent-ink)}
+.sep{height:1px;background:var(--line);border:0;margin:26px 0}
+
+/* ---------- cartes ---------- */
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px;box-shadow:var(--shadow);
+}
+.stack{display:flex;flex-direction:column;gap:12px}
+.stack-sm{display:flex;flex-direction:column;gap:8px}
+
+/* ---------- carte du jour ---------- */
+.today{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.today-head{
+  padding:16px 18px;border-bottom:1px solid var(--line);
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+}
+.today-head .wk{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink)}
+.today-head h2{margin:0;flex-basis:100%}
+.today-head .sub{font-size:.88rem;color:var(--ink-soft)}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{
+  display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;
+  padding:14px 18px;border-bottom:1px solid var(--line);
+}
+.steps li:last-child{border-bottom:0}
+.steps .n{
+  font-family:var(--f-mono);font-size:.74rem;font-weight:600;color:var(--accent-ink);
+  background:var(--accent-soft);border-radius:8px;height:26px;display:grid;place-items:center;margin-top:1px;
+}
+.steps li > span:last-child{display:flex;flex-direction:column;gap:3px;min-width:0}
+.steps .t{display:block;font-weight:650;font-size:.96rem}
+.steps .d{display:block;font-size:.86rem;color:var(--ink-soft)}
+.steps .btn-row{margin-top:6px}
+
+/* ---------- boutons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--accent);color:var(--on-accent);border:0;border-radius:11px;
+  padding:13px 18px;font-weight:650;font-size:.96rem;text-decoration:none;
+}
+.btn.block{width:100%}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.quiet{background:var(--surface-2);color:var(--ink);border:1px solid transparent}
+.btn:disabled{opacity:.45;cursor:default}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ---------- liste des themes ---------- */
+.theme-list{display:flex;flex-direction:column;gap:10px}
+.theme{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;row-gap:3px;align-items:center;
+  width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);
+}
+.theme .name{grid-area:1 / 1;font-weight:650;font-size:1rem}
+.theme .desc{grid-area:2 / 1;font-size:.85rem;color:var(--ink-soft)}
+.theme .meter{grid-area:1 / 2 / 3 / 3;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.theme .count{font-size:.75rem;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.bar{width:64px;height:5px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.theme.key{border-color:color-mix(in srgb, var(--accent) 45%, var(--line))}
+.tagline{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink)}
+
+/* ---------- fiche phrase ---------- */
+.phrase{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:15px 16px;box-shadow:var(--shadow);
+}
+.phrase + .phrase{margin-top:10px}
+.phrase .fr{font-size:.9rem;color:var(--ink-soft);margin-bottom:6px}
+.phon{
+  font-family:var(--f-mono);font-size:1.24rem;line-height:1.32;font-weight:500;
+  letter-spacing:-.01em;margin:0 0 4px;overflow-wrap:anywhere;
+}
+.phon em{font-style:normal;color:var(--accent-ink)}
+.alt{font-size:.83rem;color:var(--ink-soft);font-family:var(--f-mono);margin-top:2px}
+.alt b{font-family:var(--f-ui);font-weight:600;color:var(--ink-faint);font-size:.76rem;letter-spacing:.04em;text-transform:uppercase}
+.ar{font-family:var(--f-ar);font-size:1.05rem;color:var(--ink-faint);direction:rtl;margin-top:6px}
+.note{
+  font-size:.86rem;color:var(--ink-soft);background:var(--surface-2);
+  border-radius:10px;padding:9px 11px;margin-top:10px;
+}
+.note b{color:var(--ink)}
+.controls{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);
+  background:var(--surface);border-radius:999px;padding:7px 13px;font-size:.84rem;font-weight:600;color:var(--ink);
+}
+.chip.play{background:var(--accent-soft);border-color:transparent;color:var(--accent-ink)}
+.chip.rec[data-state="rec"]{background:var(--danger);border-color:transparent;color:#fff}
+.chip.has{border-color:color-mix(in srgb, var(--saffron) 55%, var(--line));color:var(--saffron)}
+.chip small{font-weight:500;color:var(--ink-faint)}
+.chip svg{width:15px;height:15px;flex:none}
+.star{width:16px;height:16px;color:var(--saffron);flex:none}
+.phrase.mastered{border-color:color-mix(in srgb, var(--saffron) 40%, var(--line))}
+
+/* ---------- session de revision ---------- */
+.drill{display:flex;flex-direction:column;gap:14px;min-height:60vh}
+.drill-top{display:flex;align-items:center;gap:12px}
+.progressline{flex:1;height:5px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.progressline i{display:block;height:100%;background:var(--accent)}
+.mode{
+  align-self:flex-start;font-size:.7rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  padding:5px 10px;border-radius:999px;
+}
+.mode.listen{background:color-mix(in srgb, var(--blue) 14%, transparent);color:var(--blue)}
+.mode.speak{background:var(--accent-soft);color:var(--accent-ink)}
+.prompt{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 20px;box-shadow:var(--shadow);text-align:center;
+}
+.prompt .ask{font-family:var(--f-display);font-size:1.62rem;line-height:1.2;margin:0 0 4px;text-wrap:balance}
+.prompt .hint{font-size:.85rem;color:var(--ink-faint);margin:12px 0 0}
+.reveal{border-top:1px dashed var(--line);margin-top:18px;padding-top:16px}
+.reveal .phon{font-size:1.5rem}
+.bigplay{
+  width:86px;height:86px;border-radius:50%;border:0;background:var(--accent-soft);color:var(--accent-ink);
+  display:grid;place-items:center;margin:6px auto 2px;
+}
+.bigplay svg{width:34px;height:34px}
+.grade{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.grade button{
+  border:1px solid var(--line);background:var(--surface);border-radius:11px;padding:13px 6px;
+  font-size:.86rem;font-weight:650;display:flex;flex-direction:column;gap:3px;align-items:center;
+}
+.grade button small{font-weight:500;font-size:.7rem;color:var(--ink-faint)}
+.grade .g1{color:var(--danger)}
+.grade .g3{color:var(--accent-ink)}
+
+/* ---------- guide ---------- */
+.sound{
+  display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start;
+  padding:14px 0;border-bottom:1px solid var(--line);
+}
+.sound:last-child{border-bottom:0}
+.sound .sym{
+  font-family:var(--f-mono);font-size:1.5rem;font-weight:600;color:var(--accent-ink);
+  background:var(--accent-soft);border-radius:10px;padding:10px 0;text-align:center;
+}
+.sound .how{font-size:.9rem;color:var(--ink-soft)}
+.sound .ex{font-family:var(--f-mono);font-size:.88rem;color:var(--ink);margin-top:4px}
+.rules{list-style:none;margin:0;padding:0;counter-reset:r}
+.rules li{
+  counter-increment:r;display:grid;grid-template-columns:26px 1fr;gap:12px;
+  padding:12px 0;border-bottom:1px solid var(--line);
+}
+.rules li:last-child{border-bottom:0}
+.rules li::before{
+  content:counter(r);font-family:var(--f-mono);font-size:.78rem;font-weight:600;
+  color:var(--saffron);padding-top:2px;
+}
+.rules b{display:block;margin-bottom:2px}
+.rules span{font-size:.89rem;color:var(--ink-soft)}
+.weeks{display:flex;flex-direction:column;gap:0}
+.week{display:grid;grid-template-columns:52px 1fr;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.week:last-child{border-bottom:0}
+.week .no{font-family:var(--f-mono);font-size:.76rem;font-weight:600;color:var(--ink-faint);padding-top:3px}
+.week .t{font-weight:650;font-size:.96rem}
+.week .d{font-size:.86rem;color:var(--ink-soft)}
+.week.now{background:var(--accent-soft);margin:0 -12px;padding:13px 12px;border-radius:10px;border-bottom-color:transparent}
+.week.now .no,.week.now .d{color:var(--accent-ink)}
+
+/* ---------- stats ---------- */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 12px;text-align:center}
+.tile .v{font-family:var(--f-display);font-size:2rem;line-height:1;font-variant-numeric:tabular-nums}
+.tile .k{font-size:.74rem;color:var(--ink-faint);margin-top:5px;letter-spacing:.03em}
+
+/* ---------- barre d onglets ---------- */
+.tabs{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  background:color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter:blur(12px);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.tabs .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding:0}
+.tab{
+  background:none;border:0;padding:9px 4px 11px;display:flex;flex-direction:column;align-items:center;gap:3px;
+  color:var(--ink-faint);font-size:.7rem;font-weight:600;letter-spacing:.02em;
+}
+.tab svg{width:21px;height:21px}
+.tab[aria-selected="true"]{color:var(--accent-ink)}
+.tab .dot{width:5px;height:5px;border-radius:50%;background:var(--saffron);position:absolute;transform:translate(13px,-3px)}
+
+input[type=range]{accent-color:var(--accent)}
+.muted{color:var(--ink-faint);font-size:.85rem}
+.center{text-align:center}
+.hidden{display:none !important}
+@media (prefers-reduced-motion: no-preference){
+  .prompt,.phrase{transition:border-color .2s ease}
+  .bigplay{transition:transform .12s ease}
+  .bigplay:active{transform:scale(.94)}
+}
+
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.6 15 5.4l4.7-.8-.8 4.7 3.8 3-3.8 3 .8 4.7-4.7-.8-3 3.8-3-3.8-4.7.8.8-4.7-3.8-3 3.8-3-.8-4.7 4.7.8z" fill="currentColor" opacity=".16"/><path d="M12 2.6 3.4 12 12 21.4 20.6 12 12 2.6zM12 6.6 17 12l-5 5.4L7 12l5-5.4z" fill="currentColor"/></svg>
+      Dar Darija
+    </div>
+    <div class="spacer"></div>
+    <div class="streak" id="streak" title="jours d affilee">0 jours</div>
+    <button class="iconbtn" id="themeBtn" aria-label="Changer le theme clair ou sombre">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 13.5A8 8 0 1 1 10.5 4a6.5 6.5 0 0 0 9.5 9.5z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- AUJOURD HUI -->
+  <section class="view on" id="v-today" aria-label="Aujourd hui">
+    <div class="wrap">
+      <p class="eyebrow">Ta seance du jour, 12 minutes</p>
+      <div class="today" id="todayCard"></div>
+      <div class="tiles" id="tiles" style="margin-top:18px"></div>
+      <hr class="sep">
+      <h2>Le vocal du soir</h2>
+      <p>Enregistre ces trois phrases et envoie-les a ton copain. C est le seul exercice qui compte vraiment : passer de je sais la dire a je l ai dite.</p>
+      <div id="vocal" class="stack-sm"></div>
+    </div>
+  </section>
+
+  <!-- THEMES -->
+  <section class="view" id="v-themes" aria-label="Themes">
+    <div class="wrap">
+      <div id="themesIndex">
+        <p class="eyebrow">15 themes, 242 phrases</p>
+        <h1>Par situation</h1>
+        <p>Les themes marques <b>essentiel</b> sont ceux qui changent une visite. Commence par eux.</p>
+        <div class="theme-list" id="themeList" style="margin-top:18px"></div>
+      </div>
+      <div id="themeDetail" class="hidden"></div>
+    </div>
+  </section>
+
+  <!-- REVISER -->
+  <section class="view" id="v-drill" aria-label="Reviser">
+    <div class="wrap" id="drillRoot"></div>
+  </section>
+
+  <!-- GUIDE -->
+  <section class="view" id="v-guide" aria-label="Guide">
+    <div class="wrap">
+      <p class="eyebrow">La methode</p>
+      <h1>Huit regles, et rien d autre</h1>
+      <p>Tu ne veux ni lire ni ecrire l arabe : tout ici est fait pour l oreille et la bouche.</p>
+      <ol class="rules" id="rules" style="margin-top:14px"></ol>
+
+      <hr class="sep">
+      <h2>Les sons qui n existent pas en francais</h2>
+      <p>Huit symboles a connaitre. Ils reviennent dans toutes les phrases de l app.</p>
+      <div id="sounds" style="margin-top:8px"></div>
+
+      <hr class="sep">
+      <h2>Le parcours en huit semaines</h2>
+      <p>Une semaine equivaut a six seances. Tu avances quand tu travailles, pas quand le calendrier avance.</p>
+      <div class="weeks" id="weeks" style="margin-top:10px"></div>
+
+      <hr class="sep">
+      <h2>Reglages</h2>
+      <div class="card stack">
+        <div>
+          <h3>Vitesse de la voix du telephone</h3>
+          <p class="muted" style="margin:2px 0 8px">La voix lit de l arabe classique : elle donne le squelette du mot, pas l accent marocain. Ta vraie reference reste la voix que tu enregistres.</p>
+          <input type="range" id="rate" min="0.5" max="1" step="0.05" style="width:100%">
+        </div>
+        <div>
+          <h3>Voix disponible</h3>
+          <p class="muted" id="voiceInfo" style="margin:2px 0 0">Verification...</p>
+        </div>
+        <button class="btn ghost" id="resetBtn">Tout remettre a zero</button>
+      </div>
+      <p class="muted center" style="margin:22px 0 0">Tes revisions et les voix enregistrees restent dans ce telephone. Rien n est envoye ailleurs.</p>
+    </div>
+  </section>
+</main>
+
+<nav class="tabs" aria-label="Navigation">
+  <div class="wrap" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-go="today">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Aujourd hui</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="themes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="4" width="17" height="16" rx="2.5"/><path d="M8 4v16"/></svg>Themes</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="drill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M5.5 8v8M18.5 8v8M2.5 11v2M21.5 11v2"/></svg><span id="dueDot" class="dot hidden"></span>Reviser</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="guide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5.5A2 2 0 0 1 6 3.5h6v17H6a2 2 0 0 0-2 2z"/><path d="M20 5.5a2 2 0 0 0-2-2h-6v17h6a2 2 0 0 1 2 2z"/></svg>Guide</button>
+  </div>
+</nav>
+<script>
+/* Dar Darija — contenu. Tout est pense pour l oral :
+   fr   = ce que ca veut dire
+   phon = ce que tu prononces (lecture a la francaise)
+   ar   = arabe, invisible dans l app, sert uniquement a la voix du telephone
+   alt  = la variante quand tu parles a une femme (ou a un homme)
+   note = ce qu il faut savoir pour ne pas se planter                        */
+
+const GUIDE = {
+  sounds: [
+    { sym:"7", name:"le h souffle", how:"Un h expire du fond de la gorge, comme quand tu embues une vitre, mais plus serre. Ce n est PAS le h muet francais.", ex:"l7amdoullah (Dieu merci), s7ab (ami), 7lib (lait)" },
+    { sym:"kh", name:"la jota", how:"Le ch allemand de Bach, ou la jota espagnole. Comme si tu raclais doucement.", ex:"khoya (mon frere), lkhobz (le pain), sba7 lkhir (bonjour)" },
+    { sym:"gh", name:"le r francais", how:"Bonne nouvelle : c est exactement le r de Paris, grasseye. Tu l as deja.", ex:"lmaghrib (le Maroc), ghadi (je vais), ghali (cher)" },
+    { sym:"r", name:"le r roule", how:"Roule-le comme en espagnol ou en italien. Ne le prononce jamais a la francaise, sinon tu dis gh.", ex:"mer7ba (bienvenue), darija, bared (froid)" },
+    { sym:"3", name:"le son du fond", how:"Le plus dur. Serre la gorge comme si tu allais tousser, et fais un a. Personne ne t en voudra si tu le rates : dis un a bien ouvert.", ex:"3afak (s il te plait), 3likoum, 3ayyana (fatiguee)" },
+    { sym:"q", name:"le k profond", how:"Un k prononce tout au fond, la ou tu avales. Different du k normal.", ex:"qhwa (cafe), nqder (je peux), waqila (peut-etre)" },
+    { sym:"ou", name:"le ou", how:"Toujours le ou francais, jamais le u de tu. Le son u n existe pas en darija.", ex:"chokran, kouli (mange), lyoum (aujourd hui)" },
+    { sym:"e", name:"le e avale", how:"Un e tres court, comme dans le petit dit vite. Souvent on l entend a peine.", ex:"kanhder (je parle), sme7 liya (pardon)" }
+  ],
+  rules: [
+    { t:"Zero ecriture, zero grammaire", d:"Tu n apprends pas une langue, tu apprends des blocs entiers a sortir au bon moment. Ne cherche jamais pourquoi ca se dit comme ca." },
+    { t:"Toujours a voix haute", d:"Une phrase lue des yeux ne sort pas de ta bouche le jour J. Repete-la 3 fois a voix haute, meme dans le metro, meme en chuchotant." },
+    { t:"La voix de ton copain est ta reference", d:"Sur chaque fiche, le bouton micro enregistre sa voix. La voix du telephone lit de l arabe classique : c est une bequille, pas un modele. Fais-lui enregistrer un theme par semaine." },
+    { t:"Comprendre avant de parler", d:"En famille, 80 pour cent du temps tu ecoutes. Le theme Ce qu ils vont te dire vaut plus que tous les autres : travaille-le des la semaine 1." },
+    { t:"12 minutes par jour battent 2 heures le dimanche", d:"La memoire a besoin de repetitions espacees, pas de marathons. L app te ressort chaque phrase juste avant que tu l oublies." },
+    { t:"Le vocal quotidien", d:"Chaque soir, envoie un vocal de 20 secondes a ton copain avec les phrases du jour. C est la seule facon de passer de je sais dire a je dis." },
+    { t:"Cinq mots te sauvent partout", d:"bezzaf (beaucoup), chwiya (un peu), safi (ca suffit, c est bon), wakha (d accord), nchallah (si Dieu veut). Glisse-les partout, ca sonne immediatement local." },
+    { t:"Vise 30 phrases, pas la perfection", d:"Sa famille ne va pas te noter. Dix phrases dites de travers avec le sourire valent mille fois une grammaire parfaite et un silence gene." }
+  ]
+};
+
+const PROGRAM = [
+  { n:1, title:"Les sons, puis saluer", desc:"Le guide des sons, les 12 phrases de survie, saluer et prendre conge.", themes:["urgence","salamat"] },
+  { n:2, title:"Se presenter, remercier", desc:"Dire qui tu es, et les formules de politesse qui reviennent 50 fois par jour.", themes:["premiere","politesse"] },
+  { n:3, title:"A table, premiere moitie", desc:"Le vrai terrain de jeu. Compliment sur la cuisine, refuser de se resservir.", themes:["table","ecoute"] },
+  { n:4, title:"Comprendre et se debloquer", desc:"Ce qu ils te disent, et comment demander de repeter sans bloquer la conversation.", themes:["ecoute","comprendre"] },
+  { n:5, title:"Papoter, la famille", desc:"Les questions faciles a poser, et comment appeler chaque personne.", themes:["smalltalk","famille"] },
+  { n:6, title:"Chez eux, et le coeur", desc:"S installer, aider, complimenter, dire ce que tu ressens.", themes:["maison","sentiments"] },
+  { n:7, title:"Dehors et au telephone", desc:"Taxi, souk, chiffres et prix. Puis les appels avec sa mere.", themes:["dehors","telephone"] },
+  { n:8, title:"Les grandes occasions", desc:"Fetes, mariage, naissance, condoleances. Et la revision generale.", themes:["occasions","amour"] }
+];
+
+const THEMES = [
+{
+  id:"urgence", name:"Les 12 de survie", desc:"Si tu n apprends que ca, tu tiens deja une soiree entiere.", key:true,
+  items:[
+    { id:"u1", fr:"Bonjour a tous (partout, tout le temps)", phon:"salam 3likoum", ar:"السلام عليكم", note:"La salutation passe-partout. On te repondra <b>wa 3likoum salam</b>." },
+    { id:"u2", fr:"Merci", phon:"chokran", ar:"شكرا", note:"Version plus chaleureuse, tres appreciee : <b>barakallahou fik</b> (que Dieu te benisse)." },
+    { id:"u3", fr:"S il te plait", phon:"3afak", ar:"عافاك", note:"Se colle a la fin de n importe quelle demande." },
+    { id:"u4", fr:"Oui / D accord", phon:"iyeh / wakha", ar:"إيه، واخا", note:"<b>wakha</b> est le d accord national. Tu peux l utiliser pour tout." },
+    { id:"u5", fr:"Non, merci", phon:"lla, chokran", ar:"لا شكرا", note:"Un simple <b>lla</b> seul peut sembler sec : ajoute toujours chokran." },
+    { id:"u6", fr:"Pardon, excuse-moi", phon:"sme7 liya", ar:"سمح ليا", alt:{ l:"a une femme", phon:"sem7i liya", ar:"سمحي ليا" } },
+    { id:"u7", fr:"Je n ai pas compris", phon:"ma fhemtch", ar:"ما فهمتش", note:"A dire sans culpabiliser, c est la phrase que tu utiliseras le plus." },
+    { id:"u8", fr:"Repete doucement, s il te plait", phon:"3awed b chwiya 3afak", ar:"عاود بشوية عافاك", alt:{ l:"a une femme", phon:"3awdi b chwiya 3afak", ar:"عاودي بشوية عافاك" } },
+    { id:"u9", fr:"C est delicieux", phon:"bnin bezzaf", ar:"بنين بزاف", note:"La phrase qui te fait adopter en trois secondes. Dis-la fort, a table." },
+    { id:"u10", fr:"J ai assez mange, merci", phon:"chb3et, barakallahou fik", ar:"شبعت، بارك الله فيك", note:"Il faudra la repeter au moins quatre fois. C est normal, ca fait partie du jeu." },
+    { id:"u11", fr:"Je suis tres contente d etre ici", phon:"ana ferhana bezzaf", ar:"أنا فرحانة بزاف", note:"<b>ferhana</b> parce que tu es une femme. Un homme dirait ferhan." },
+    { id:"u12", fr:"J apprends le darija, petit a petit", phon:"kant3allem ddarija, chwiya b chwiya", ar:"كنتعلم الدارجة، شوية بشوية", note:"Sors-la des le debut : apres ca, tout le monde te parlera plus lentement." }
+  ]
+},
+{
+  id:"salamat", name:"Saluer et partir", desc:"Arriver, embrasser tout le monde, et repartir proprement.",
+  items:[
+    { id:"s1", fr:"Bonjour a tous", phon:"salam 3likoum", ar:"السلام عليكم" },
+    { id:"s2", fr:"Et a toi le salut (la reponse)", phon:"wa 3likoum salam", ar:"وعليكم السلام", note:"Quand quelqu un entre et dit salam 3likoum, c est ta reponse automatique." },
+    { id:"s3", fr:"Bonjour (le matin)", phon:"sba7 lkhir", ar:"صباح الخير", note:"Reponse : <b>sba7 nnour</b> (matin de lumiere)." },
+    { id:"s4", fr:"Bonsoir", phon:"msa lkhir", ar:"مسا الخير", note:"Reponse : <b>msa nnour</b>." },
+    { id:"s5", fr:"Comment tu vas ?", phon:"kif dayer ?", ar:"كيف داير؟", alt:{ l:"a une femme", phon:"kif dayra ?", ar:"كيف دايرة؟" }, note:"A sa mere, c est donc <b>kif dayra</b>. Retiens la version femme en premier." },
+    { id:"s6", fr:"Ca va ? (le plus simple)", phon:"labas ?", ar:"لاباس؟", note:"Marche pour homme, femme, groupe. Si tu ne dois en retenir qu une, c est celle-la." },
+    { id:"s7", fr:"Ca va bien, Dieu merci", phon:"labas, l7amdoullah", ar:"لاباس الحمد لله", note:"On repond presque toujours l7amdoullah, meme quand ca ne va pas." },
+    { id:"s8", fr:"Et toi ?", phon:"w nta ?", ar:"ونتا؟", alt:{ l:"a une femme", phon:"w nti ?", ar:"ونتي؟" } },
+    { id:"s9", fr:"Bienvenue !", phon:"mer7ba", ar:"مرحبا", note:"On te le dira 20 fois en arrivant. Reponds <b>chokran, Allah ybarek fik</b>." },
+    { id:"s10", fr:"Comment va la maisonnee ?", phon:"kif dayrin f ddar ?", ar:"كيف دايرين فالدار؟", note:"On demande des nouvelles de toute la famille avant de parler de quoi que ce soit. Ne saute jamais cette etape." },
+    { id:"s11", fr:"Tu m as manque", phon:"twa77echtek", ar:"توحشتك", note:"Enorme effet sur la belle-mere. Vraiment." },
+    { id:"s12", fr:"Au revoir", phon:"bslama", ar:"بسلامة" },
+    { id:"s13", fr:"Prends soin de toi", phon:"thella f rassek", ar:"تهلا فراسك", alt:{ l:"a une femme", phon:"thelli f rassek", ar:"تهلي فراسك" }, note:"Le vrai au revoir affectueux marocain." },
+    { id:"s14", fr:"Bonne nuit", phon:"tesba7 3la khir", ar:"تصبح على خير", alt:{ l:"a une femme", phon:"tesb7i 3la khir", ar:"تصبحي على خير" } },
+    { id:"s15", fr:"On se voit demain", phon:"nchoufou ghedda", ar:"نشوفو غدا" },
+    { id:"s16", fr:"A tout a l heure", phon:"nchoufek men be3d", ar:"نشوفك من بعد" },
+    { id:"s17", fr:"Salue tout le monde de ma part", phon:"sellem liya 3la koulchi", ar:"سلم ليا على كلشي", note:"Se dit a la fin de chaque appel telephonique, sans exception." },
+    { id:"s18", fr:"Que Dieu te garde", phon:"Allah ykhllik", ar:"الله يخليك", note:"Sert de merci, de s il te plait et de je t aime bien. Le couteau suisse." }
+  ]
+},
+{
+  id:"premiere", name:"La premiere rencontre", desc:"Qui tu es, d ou tu viens, et pourquoi ton darija est encore bancal.",
+  items:[
+    { id:"p1", fr:"Je m appelle Chloe", phon:"smiti Chloe", ar:"سميتي كلوي", note:"Remplace par ton prenom. <b>smiti</b> = mon nom est." },
+    { id:"p2", fr:"Comment tu t appelles ?", phon:"chnou smitek ?", ar:"شنو سميتك؟" },
+    { id:"p3", fr:"Enchantee", phon:"metcharrfa", ar:"متشرفة", note:"Toi tu dis metcharrfa (femme). Lui dirait metcharref." },
+    { id:"p4", fr:"Je suis francaise", phon:"ana fransawiya", ar:"أنا فرنساوية" },
+    { id:"p5", fr:"Je viens de France", phon:"ana jaya men fransa", ar:"أنا جاية من فرنسا", note:"<b>jaya</b> au feminin. Un homme dirait jay." },
+    { id:"p6", fr:"J habite a Paris", phon:"kanskoun f bariz", ar:"كنسكن فباريز" },
+    { id:"p7", fr:"J apprends le darija", phon:"kant3allem ddarija", ar:"كنتعلم الدارجة" },
+    { id:"p8", fr:"Je parle un tout petit peu", phon:"kanhder ghir chwiya", ar:"كنهضر غير شوية" },
+    { id:"p9", fr:"Je comprends un peu", phon:"kanfhem chwiya", ar:"كنفهم شوية" },
+    { id:"p10", fr:"Je ne parle pas encore bien", phon:"mazal ma kanhderch mezyan", ar:"مازال ما كنهضرش مزيان" },
+    { id:"p11", fr:"Excuse-moi pour mon darija", phon:"sme7 liya, ddarija dyali mazal", ar:"سمح ليا، الدارجة ديالي مازال", note:"Ca fait toujours rire, et ca desamorce tout." },
+    { id:"p12", fr:"C est ma premiere fois au Maroc", phon:"hadi lewwla merra li jit l lmaghrib", ar:"هادي اللولا مرة لي جيت للمغرب" },
+    { id:"p13", fr:"Je travaille dans...", phon:"kankhdem f...", ar:"كنخدم ف", note:"Complete avec le mot francais, tout le monde comprendra." },
+    { id:"p14", fr:"J ai trente ans", phon:"3endi tlatin 3am", ar:"عندي تلاتين عام" },
+    { id:"p15", fr:"Je suis la copine de Youssef", phon:"ana s7abtou dyal Youssef", ar:"أنا صاحبتو ديال يوسف", note:"Selon la famille, on presente plutot une <b>khatiba</b> (fiancee). Demande a ton copain le mot qu il veut que tu emploies devant SA famille : c est lui qui connait le terrain." },
+    { id:"p16", fr:"Je suis contente de vous rencontrer", phon:"ferhana bach t3arreft bikoum", ar:"فرحانة باش تعرفت بيكم" }
+  ]
+},
+{
+  id:"politesse", name:"Merci, pardon, et Dieu", desc:"Les formules qui reviennent toutes les trois phrases. Sans elles, tu sonnes froide.",
+  items:[
+    { id:"po1", fr:"Merci", phon:"chokran", ar:"شكرا" },
+    { id:"po2", fr:"Que Dieu te benisse (merci chaleureux)", phon:"barakallahou fik", ar:"بارك الله فيك", note:"Le vrai merci du quotidien. Plus fort que chokran." },
+    { id:"po3", fr:"De rien", phon:"bla jmil", ar:"بلا جميل", note:"Litteralement sans faveur. Reponse standard a un merci." },
+    { id:"po4", fr:"S il te plait", phon:"3afak", ar:"عافاك" },
+    { id:"po5", fr:"Ce n est rien, pas de souci", phon:"makayn mouchkil", ar:"ما كاين مشكيل" },
+    { id:"po6", fr:"C est bon, ca suffit, on arrete la", phon:"safi", ar:"صافي", note:"Mot magique. Sert a dire c est bon, fini, d accord, arrete. Utilise-le partout." },
+    { id:"po7", fr:"Si Dieu veut", phon:"nchallah", ar:"إن شاء الله", note:"S ajoute a TOUT ce qui n est pas encore arrive. On revient l an prochain, nchallah." },
+    { id:"po8", fr:"Dieu merci", phon:"l7amdoullah", ar:"الحمد لله", note:"Apres avoir mange, apres ca va bien, apres une bonne nouvelle." },
+    { id:"po9", fr:"Au nom de Dieu (avant de commencer)", phon:"bsmillah", ar:"بسم الله", note:"Se dit avant de manger, de monter en voiture, de commencer quelque chose. Ne pas le dire a table se remarque." },
+    { id:"po10", fr:"Que Dieu benisse (compliment sans mauvais oeil)", phon:"tbarkallah", ar:"تبارك الله", note:"<b>Regle d or</b> : quand tu complimentes quelqu un ou un enfant, ajoute tbarkallah, sinon le compliment peut etre percu comme portant le mauvais oeil. Ta maison est belle, tbarkallah." },
+    { id:"po11", fr:"Bon courage (a quelqu un qui travaille)", phon:"Allah y3awn", ar:"الله يعاون" },
+    { id:"po12", fr:"A ta sante ! (apres un repas, un bain, du neuf)", phon:"bsse77a", ar:"بالصحة", note:"On te le dira si tu sors de la douche ou si tu portes un vetement neuf. Reponse : <b>Allah y3tik ssa77a</b>." },
+    { id:"po13", fr:"Que Dieu te donne la sante (la reponse)", phon:"Allah y3tik ssa77a", ar:"الله يعطيك الصحة" },
+    { id:"po14", fr:"Je suis desolee", phon:"ana asfa", ar:"أنا آسفة", note:"Au feminin. Un homme dit ana asef." },
+    { id:"po15", fr:"Avec plaisir", phon:"b koull sourour", ar:"بكل سرور" },
+    { id:"po16", fr:"Que Dieu te garde tes parents (merci profond)", phon:"Allah ykhelli lik lwalidin", ar:"الله يخلي ليك الوالدين", note:"A sortir quand quelqu un t a vraiment aidee. Effet garanti." }
+  ]
+},
+{
+  id:"table", name:"A table", desc:"La ou tout se joue vraiment. Complimenter, refuser poliment, survivre au quatrieme service.", key:true,
+  items:[
+    { id:"t1", fr:"Au nom de Dieu (avant de manger)", phon:"bsmillah", ar:"بسم الله", note:"On le dit avant la premiere bouchee. Personne ne t en voudra si tu l oublies, mais le dire te fait gagner dix points d un coup." },
+    { id:"t2", fr:"Dieu merci (a la fin du repas)", phon:"l7amdoullah", ar:"الحمد لله" },
+    { id:"t3", fr:"C est delicieux", phon:"bnin bezzaf", ar:"بنين بزاف" },
+    { id:"t4", fr:"Que Dieu benisse tes mains", phon:"Allah ybarek f yeddik", ar:"الله يبارك في يديك", note:"LE compliment a la personne qui a cuisine. Dis-le en la regardant. C est celui qui compte." },
+    { id:"t5", fr:"Tu cuisines vraiment bien", phon:"katTayybi mezyan bezzaf", ar:"كتطيبي مزيان بزاف", alt:{ l:"a un homme", phon:"katTayyeb mezyan bezzaf", ar:"كتطيب مزيان بزاف" } },
+    { id:"t6", fr:"J ai assez mange", phon:"chb3et", ar:"شبعت" },
+    { id:"t7", fr:"Vraiment, je n en peux plus", phon:"chb3et bezzaf, Allah ykhllik", ar:"شبعت بزاف، الله يخليك", note:"La deuxieme ligne de defense quand on te resert malgre chb3et." },
+    { id:"t8", fr:"C etait beaucoup, merci", phon:"kan bezzaf, barakallahou fik", ar:"كان بزاف، بارك الله فيك" },
+    { id:"t9", fr:"Encore un tout petit peu alors", phon:"chwiya sghira barka", ar:"شوية صغيرة بركا", note:"La sortie diplomatique : accepter une micro-portion vaut mieux qu un refus net. Refuser trop fermement peut vexer." },
+    { id:"t10", fr:"Je ne mange pas de viande", phon:"ma kanakoulch lle7em", ar:"ما كناكلش اللحم" },
+    { id:"t11", fr:"Je suis vegetarienne", phon:"ana nabatiya", ar:"أنا نباتية", note:"Prepare-toi : le concept surprend souvent. Ajoute <b>kanakoul lkhoDra ou lhout</b> (je mange legumes et poisson) si c est ton cas." },
+    { id:"t12", fr:"Je suis allergique a...", phon:"3endi 7asasiya men...", ar:"عندي حساسية من", note:"A faire traduire par ton copain pour l aliment precis, et a repeter a chaque visite." },
+    { id:"t13", fr:"Un peu d eau, s il te plait", phon:"chwiya dyal lma 3afak", ar:"شوية ديال الما عافاك" },
+    { id:"t14", fr:"Du the, volontiers", phon:"atay, b3da", ar:"أتاي بعدا", note:"<b>atay</b> = le the a la menthe. Refuser le the est presque impossible, accepte." },
+    { id:"t15", fr:"Sans sucre, s il te plait", phon:"bla sokkar 3afak", ar:"بلا سكر عافاك", note:"Le the marocain est TRES sucre. Cette phrase peut te sauver." },
+    { id:"t16", fr:"Passe-moi le pain, s il te plait", phon:"3tini lkhobz 3afak", ar:"عطيني الخبز عافاك", alt:{ l:"a une femme", phon:"3tini lkhobz 3afak", ar:"عطيني الخبز عافاك" } },
+    { id:"t17", fr:"C est un peu piquant pour moi", phon:"harr chwiya 3liya", ar:"حار شوية عليا" },
+    { id:"t18", fr:"J adore le tajine", phon:"kanbghi ttajin bezzaf", ar:"كنبغي الطاجين بزاف" },
+    { id:"t19", fr:"Le couscous du vendredi est le meilleur", phon:"seksou dyal jjem3a a7sen 7aja", ar:"سكسو ديال الجمعة أحسن حاجة", note:"Le couscous du vendredi est un rituel familial. Le mentionner montre que tu as compris quelque chose d important." },
+    { id:"t20", fr:"Je peux t aider ?", phon:"n3awnek ?", ar:"نعاونك؟", note:"Propose-le en debarrassant. Refuse-le d abord, insiste une fois, puis laisse faire." },
+    { id:"t21", fr:"Je peux faire la vaisselle", phon:"nghsel lma3oun", ar:"نغسل الماعون" },
+    { id:"t22", fr:"Ou je pose ca ?", phon:"fin nkhelli hada ?", ar:"فين نخلي هادا؟" },
+    { id:"t23", fr:"Bon appetit (a la sante)", phon:"bsse77a", ar:"بالصحة" },
+    { id:"t24", fr:"C etait le meilleur repas de ma vie", phon:"hada a7sen makla klit f 7yati", ar:"هادا أحسن ماكلة كليت فحياتي", note:"Un peu excessif, donc parfait. A garder pour le grand repas du premier jour." }
+  ]
+},
+{
+  id:"ecoute", name:"Ce qu ILS vont te dire", desc:"Le theme le plus rentable : tu ne le diras jamais, tu vas l entendre tous les jours.", key:true,
+  items:[
+    { id:"e1", fr:"Bienvenue chez toi !", phon:"mer7ba bik, hadi darek", ar:"مرحبا بيك، هادي دارك", note:"Litteralement c est ta maison. Reponds <b>chokran, Allah ybarek fik</b>." },
+    { id:"e2", fr:"Mange ! Mange !", phon:"kouli ! kouli !", ar:"كلي! كلي!", note:"Adresse a une femme. Tu vas l entendre en boucle." },
+    { id:"e3", fr:"Tu n as rien mange !", phon:"ma klitich walou !", ar:"ما كليتيش والو!", note:"Prononce alors que tu as mange trois assiettes. C est un rituel, pas un reproche." },
+    { id:"e4", fr:"Reprends-en un peu", phon:"zidi chwiya", ar:"زيدي شوية" },
+    { id:"e5", fr:"Ne sois pas timide, fais comme chez toi", phon:"ma t7echmich", ar:"ما تحشميش", note:"On te le dira des que tu refuses quelque chose." },
+    { id:"e6", fr:"Tu veux du the ?", phon:"wach bghiti atay ?", ar:"واش بغيتي أتاي؟" },
+    { id:"e7", fr:"Tu vas bien ?", phon:"labas 3lik ?", ar:"لاباس عليك؟" },
+    { id:"e8", fr:"Tu as bien dormi ?", phon:"n3esti mezyan ?", ar:"نعستي مزيان؟" },
+    { id:"e9", fr:"Le Maroc te plait ?", phon:"3ejbek lmaghrib ?", ar:"عجبك المغرب؟", note:"Reponse prete : <b>3ejbni bezzaf, zwin bezzaf</b>." },
+    { id:"e10", fr:"Tu sais cuisiner ?", phon:"wach kat3rfi tTayybi ?", ar:"واش كتعرفي تطيبي؟", note:"Question classique. Reponse honnete et souriante : <b>chwiya, wllakin bghit nt3allem</b> (un peu, mais je veux apprendre)." },
+    { id:"e11", fr:"Tu fais quoi comme travail ?", phon:"chnou katkhedmi ?", ar:"شنو كتخدمي؟" },
+    { id:"e12", fr:"Tu restes combien de temps ?", phon:"ch7al ghadi tbqay ?", ar:"شحال غادي تبقاي؟" },
+    { id:"e13", fr:"Doucement, petit a petit", phon:"chwiya b chwiya", ar:"شوية بشوية", note:"Ce qu on te dira sur ton darija. C est un encouragement." },
+    { id:"e14", fr:"Ma fille (affectueux)", phon:"a benti", ar:"ابنتي", note:"Si sa mere t appelle benti, c est gagne." },
+    { id:"e15", fr:"Que Dieu vous garde l un pour l autre", phon:"Allah ykhellikoum lb3diyatkoum", ar:"الله يخليكم لبعضياتكم", note:"La benediction qu on adresse a un couple. Reponds <b>amin, Allah ybarek fik</b>." },
+    { id:"e16", fr:"Que ca vous arrive a vous aussi ! (dans un mariage)", phon:"3qbal 3endkoum", ar:"عقبال عندكم", note:"On vous le dira dix fois par mariage. Reponds en riant <b>amin</b>." },
+    { id:"e17", fr:"Allez, on y va", phon:"yallah", ar:"يالله", note:"Signifie aussi viens, depeche, allons-y, et parfois a peine." },
+    { id:"e18", fr:"C est bon ? C est fini ?", phon:"safi ?", ar:"صافي؟" },
+    { id:"e19", fr:"Ce n est pas possible ! (surprise)", phon:"ma ymkench !", ar:"ما يمكنش!" },
+    { id:"e20", fr:"C est genial, c est fort !", phon:"wa3ra !", ar:"وعرة!", note:"Argot tres courant chez les jeunes : terrible au sens positif." },
+    { id:"e21", fr:"Assieds-toi", phon:"glssi", ar:"كلسي" },
+    { id:"e22", fr:"Que Dieu te benisse, tu es adorable", phon:"tbarkallah 3lik, drifa", ar:"تبارك الله عليك، ظريفة" }
+  ]
+}
+,
+{
+  id:"comprendre", name:"Quand tu es perdue", desc:"Comment demander de repeter, gagner du temps, et rester dans la conversation.",
+  items:[
+    { id:"c1", fr:"Je n ai pas compris", phon:"ma fhemtch", ar:"ما فهمتش" },
+    { id:"c2", fr:"Repete, s il te plait", phon:"3awdi 3afak", ar:"عاودي عافاك", alt:{ l:"a un homme", phon:"3awed 3afak", ar:"عاود عافاك" } },
+    { id:"c3", fr:"Doucement, moins vite", phon:"b chwiya 3afak", ar:"بشوية عافاك" },
+    { id:"c4", fr:"Qu est-ce que ca veut dire ?", phon:"chnou kat3ni hadi ?", ar:"شنو كتعني هادي؟" },
+    { id:"c5", fr:"Comment on dit ... en darija ?", phon:"kifach kaygoulou ... b ddarija ?", ar:"كيفاش كيقولو بالدارجة؟", note:"La phrase qui transforme n importe quel diner en cours de langue. Ils adorent." },
+    { id:"c6", fr:"Tu peux le dire en francais ?", phon:"tqder tgoulha b lfransawiya ?", ar:"تقدر تقولها بالفرنساوية؟" },
+    { id:"c7", fr:"Attends, je reflechis", phon:"tsenna, kanfekker", ar:"تسنى، كنفكر" },
+    { id:"c8", fr:"Encore une fois", phon:"merra khra 3afak", ar:"مرة أخرى عافاك" },
+    { id:"c9", fr:"Je ne connais pas ce mot", phon:"ma kan3refch had lkelma", ar:"ما كنعرفش هاد الكلمة" },
+    { id:"c10", fr:"Comment ? (quand tu n as rien saisi)", phon:"na3am ?", ar:"نعم؟", note:"Plus poli que quoi. Ton montant, sourire, ca marche toujours." },
+    { id:"c11", fr:"Demande a Youssef, il va t expliquer", phon:"sewwel Youssef, ghadi ychre7 lik", ar:"سول يوسف، غادي يشرح ليك" },
+    { id:"c12", fr:"Je vais apprendre, promis", phon:"ghadi nt3allem, nchallah", ar:"غادي نتعلم، إن شاء الله" },
+    { id:"c13", fr:"Un peu seulement", phon:"ghir chwiya", ar:"غير شوية" },
+    { id:"c14", fr:"C est difficile mais j aime ca", phon:"s3ib, wllakin kayjebni", ar:"صعيب، ولكن كيعجبني" }
+  ]
+},
+{
+  id:"smalltalk", name:"Papoter", desc:"Les questions faciles a poser pour ne pas rester muette dans le salon.",
+  items:[
+    { id:"k1", fr:"Comment va ta sante ?", phon:"kif ss77a ?", ar:"كيف الصحة؟", note:"On demande la sante avant tout le reste, surtout aux personnes agees." },
+    { id:"k2", fr:"Comment va la famille ?", phon:"labas 3la l3a2ila ?", ar:"لاباس على العائلة؟" },
+    { id:"k3", fr:"Quoi de neuf ?", phon:"chnou lakhbar ?", ar:"شنو الأخبار؟" },
+    { id:"k4", fr:"Tu as mange ?", phon:"klliti ?", ar:"كليتي؟", note:"Question d affection, pas de logistique. On te la posera tout le temps." },
+    { id:"k5", fr:"Il fait chaud aujourd hui", phon:"lyoum skhoun", ar:"اليوم سخون" },
+    { id:"k6", fr:"Il fait froid ce soir", phon:"had llil bared", ar:"هاد الليل بارد" },
+    { id:"k7", fr:"Le Maroc est magnifique", phon:"lmaghrib zwin bezzaf", ar:"المغرب زوين بزاف" },
+    { id:"k8", fr:"J aime beaucoup Marrakech", phon:"kanbghi merrakch bezzaf", ar:"كنبغي مراكش بزاف" },
+    { id:"k9", fr:"Tu habites ou ?", phon:"fin katskoni ?", ar:"فين كتسكني؟", alt:{ l:"a un homme", phon:"fin katskoun ?", ar:"فين كتسكن؟" } },
+    { id:"k10", fr:"Tu as des enfants ?", phon:"3endek drari ?", ar:"عندك دراري؟" },
+    { id:"k11", fr:"Quel age il a ?", phon:"ch7al f 3emrou ?", ar:"شحال فعمرو؟", alt:{ l:"pour une fille", phon:"ch7al f 3emrha ?", ar:"شحال فعمرها؟" } },
+    { id:"k12", fr:"Il est mignon, que Dieu le benisse", phon:"zwin, tbarkallah 3lih", ar:"زوين، تبارك الله عليه", note:"N oublie JAMAIS le tbarkallah quand tu complimentes un enfant." },
+    { id:"k13", fr:"Je suis fatiguee", phon:"ana 3ayyana", ar:"أنا عيانة", note:"Au feminin. Un homme dit 3ayyan." },
+    { id:"k14", fr:"J ai sommeil", phon:"jani nn3as", ar:"جاني النعاس" },
+    { id:"k15", fr:"Qu est-ce qu on fait aujourd hui ?", phon:"chnou ghadi ndirou lyoum ?", ar:"شنو غادي نديرو اليوم؟" },
+    { id:"k16", fr:"Je peux prendre une photo ?", phon:"nqder nakhod tsswira ?", ar:"نقدر ناخد تصويرة؟", note:"Toujours demander, surtout aux personnes agees et au souk." },
+    { id:"k17", fr:"C est vraiment beau ici", phon:"zwin bezzaf hna", ar:"زوين بزاف هنا" },
+    { id:"k18", fr:"Raconte-moi", phon:"3awd liya", ar:"عاود ليا", note:"Sert aussi bien pour raconte-moi une histoire que pour dis-m en plus." }
+  ]
+},
+{
+  id:"famille", name:"Les gens de la famille", desc:"Comment appeler chacun. Se tromper de mot fait plus de degats qu un mauvais accent.",
+  items:[
+    { id:"f1", fr:"Maman / sa mere a lui", phon:"mama / lwalida", ar:"ماما، الوالدة", note:"Tu peux appeler sa mere <b>mmi</b> (ma mere, affectueux) si la relation est chaleureuse, ou <b>lalla</b> qui est respectueux. Demande-lui ce qu il prefere." },
+    { id:"f2", fr:"Papa / son pere a lui", phon:"baba / lwalid", ar:"بابا، الوالد", note:"On appelle souvent un homme plus age <b>3ammi</b> (mon oncle) ou <b>si</b> + prenom, par respect." },
+    { id:"f3", fr:"Mon frere", phon:"khouya", ar:"خويا" },
+    { id:"f4", fr:"Ma soeur", phon:"khti", ar:"ختي", note:"On appelle aussi khti n importe quelle femme de ton age. C est chaleureux." },
+    { id:"f5", fr:"Ton frere / ta soeur", phon:"khouk / khtek", ar:"خوك، ختك" },
+    { id:"f6", fr:"La grand-mere", phon:"jjedda", ar:"الجدة", note:"Souvent appelee <b>mmi</b> par toute la maison." },
+    { id:"f7", fr:"Le grand-pere", phon:"jjedd", ar:"الجد" },
+    { id:"f8", fr:"Tante (soeur du pere / de la mere)", phon:"3amma / khala", ar:"عمة، خالة", note:"On dit <b>khalti</b> a toute femme plus agee que soi, meme inconnue. Tres poli." },
+    { id:"f9", fr:"Oncle (frere du pere / de la mere)", phon:"3amm / khal", ar:"عم، خال" },
+    { id:"f10", fr:"Les enfants", phon:"ddrari", ar:"الدراري" },
+    { id:"f11", fr:"Le bebe", phon:"lbibi / ddri sghir", ar:"الدري الصغير" },
+    { id:"f12", fr:"La maisonnee, les gens de la maison", phon:"had ddar", ar:"هاد الدار", note:"Quand on demande kif dayrin f ddar, on parle de tout le monde a la maison." },
+    { id:"f13", fr:"Ta famille est adorable", phon:"l3a2ila dyalek drayfin bezzaf", ar:"العائلة ديالك ظريفين بزاف" },
+    { id:"f14", fr:"Vous me manquez tous", phon:"twa77echtkoum koulkoum", ar:"توحشتكم كلكم", note:"A dire au moment de repartir. Prepare-toi aux larmes." },
+    { id:"f15", fr:"Ma belle-famille (litt. la famille de mon mari)", phon:"3a2ilat rajli", ar:"عائلة راجلي", note:"Il n y a pas vraiment de mot pour belle-mere : on dit <b>mmwatou</b> (sa mere a lui). Et on l appelle mmi." },
+    { id:"f16", fr:"Nous sommes une seule famille", phon:"7na 3a2ila we7da", ar:"حنا عائلة وحدة", note:"Phrase de fin de repas, quand l ambiance est bonne. Elle fait toujours mouche." }
+  ]
+},
+{
+  id:"maison", name:"Chez eux", desc:"S installer, demander sans gener, aider a la maison.",
+  items:[
+    { id:"m1", fr:"Je peux entrer ?", phon:"nqder ndkhol ?", ar:"نقدر ندخل؟" },
+    { id:"m2", fr:"Ou sont les toilettes ?", phon:"fin kayna ttwalit ?", ar:"فين كاينة التواليت؟", note:"On dit aussi <b>bit lma</b> (la piece de l eau), plus pudique." },
+    { id:"m3", fr:"Votre maison est tres belle", phon:"ddar dyalkoum zwina bezzaf, tbarkallah", ar:"الدار ديالكم زوينة بزاف، تبارك الله" },
+    { id:"m4", fr:"Ou je peux mettre mes affaires ?", phon:"fin nkhelli l7wayj dyali ?", ar:"فين نخلي الحوايج ديالي؟" },
+    { id:"m5", fr:"J ai froid", phon:"fiya lberd", ar:"فيا البرد", note:"Utile : les maisons marocaines sont glaciales en hiver. On te donnera une couverture immediatement." },
+    { id:"m6", fr:"Je peux avoir une couverture ?", phon:"nqder nakhod chi bttaniya ?", ar:"نقدر ناخد شي بطانية؟" },
+    { id:"m7", fr:"Je suis fatiguee, je vais dormir", phon:"ana 3ayyana, ghadi nn3es", ar:"أنا عيانة، غادي نعس" },
+    { id:"m8", fr:"Je peux prendre une douche ?", phon:"nqder ndouch ?", ar:"نقدر ندوش؟" },
+    { id:"m9", fr:"Merci pour tout", phon:"chokran 3la kolchi", ar:"شكرا على كلشي" },
+    { id:"m10", fr:"Je peux aider a debarrasser ?", phon:"n3awnek nrfed ttbla ?", ar:"نعاونك نرفد الطبلة؟" },
+    { id:"m11", fr:"Laisse, je le fais", phon:"khelli, ana ndirha", ar:"خلي، أنا نديرها" },
+    { id:"m12", fr:"Ou est le chargeur ?", phon:"fin cchargeur ?", ar:"فين الشارجور؟", note:"Beaucoup d objets modernes gardent leur nom francais. En cas de doute, dis le mot francais avec l article <b>l</b> devant." },
+    { id:"m13", fr:"Il y a du wifi ?", phon:"kayn chi wifi ?", ar:"كاين شي ويفي؟" },
+    { id:"m14", fr:"Je me sens chez moi ici", phon:"kan7ess rassi f dari", ar:"كنحس راسي فداري", note:"La phrase a dire a sa mere avant de partir." }
+  ]
+},
+{
+  id:"sentiments", name:"Complimenter, ressentir", desc:"Dire que tu es contente, gênée, touchée. C est ce qui fait la difference.",
+  items:[
+    { id:"n1", fr:"Je suis tres contente", phon:"ana ferhana bezzaf", ar:"أنا فرحانة بزاف" },
+    { id:"n2", fr:"Tu es adorable", phon:"nti drifa bezzaf", ar:"نتي ظريفة بزاف", alt:{ l:"a un homme", phon:"nta drif bezzaf", ar:"نتا ظريف بزاف" } },
+    { id:"n3", fr:"Ca m a beaucoup plu", phon:"3ejbni bezzaf", ar:"عجبني بزاف" },
+    { id:"n4", fr:"C est magnifique", phon:"zwin bezzaf", ar:"زوين بزاف", alt:{ l:"pour un mot feminin", phon:"zwina bezzaf", ar:"زوينة بزاف" } },
+    { id:"n5", fr:"Je suis timide", phon:"ana 7echmana", ar:"أنا حشمانة", note:"La <b>7chouma</b> (la gene, la pudeur) est une notion centrale. Dire que tu es timide est compris et bien accueilli." },
+    { id:"n6", fr:"Tu me genes (dans le bon sens), c est trop", phon:"7echchemtini", ar:"حشمتيني", note:"A dire quand on te couvre de cadeaux ou de nourriture. Signifie tu me combles, c est trop d honneur." },
+    { id:"n7", fr:"Merci de m avoir accueillie", phon:"chokran 3la listiqbal", ar:"شكرا على الاستقبال" },
+    { id:"n8", fr:"Vous etes ma deuxieme famille", phon:"ntouma l3a2ila ttanya dyali", ar:"نتوما العائلة التانية ديالي" },
+    { id:"n9", fr:"Tu es comme ma mere", phon:"nti b7al mmi", ar:"نتي بحال مي", note:"A garder pour un vrai moment. Ce n est pas une phrase anodine." },
+    { id:"n10", fr:"Ca me touche beaucoup", phon:"kaythez fiya bezzaf", ar:"كيتهز فيا بزاف" },
+    { id:"n11", fr:"Je suis triste de partir", phon:"ana mqellqa 7it ghadi nemchi", ar:"أنا مقلقة حيت غادي نمشي" },
+    { id:"n12", fr:"Je reviens vite, si Dieu veut", phon:"ghadi nrje3 daghya, nchallah", ar:"غادي نرجع دغيا، إن شاء الله" },
+    { id:"n13", fr:"Je n oublierai jamais", phon:"3emmerni gha nnsa", ar:"عمرني غا ننسى" },
+    { id:"n14", fr:"Vous m avez trop gatee", phon:"3ziztou 3liya bezzaf", ar:"عزيزتو عليا بزاف" }
+  ]
+},
+{
+  id:"telephone", name:"Au telephone", desc:"Les appels et les visios avec sa mere : courts, chaleureux, toujours les memes phrases.",
+  items:[
+    { id:"z1", fr:"Allo, bonjour !", phon:"allo, salam 3likoum", ar:"ألو، السلام عليكم" },
+    { id:"z2", fr:"Tu m entends ?", phon:"katsem3ini ?", ar:"كتسمعيني؟", alt:{ l:"a un homme", phon:"katsem3ni ?", ar:"كتسمعني؟" } },
+    { id:"z3", fr:"Je t entends mal", phon:"ma kansem3ekch mezyan", ar:"ما كنسمعكش مزيان" },
+    { id:"z4", fr:"Le reseau est mauvais", phon:"rrezo khayb", ar:"الريزو خايب" },
+    { id:"z5", fr:"Attends une seconde", phon:"tsenna chwiya", ar:"تسنى شوية" },
+    { id:"z6", fr:"Je te passe Youssef", phon:"ghadi n3tik Youssef", ar:"غادي نعطيك يوسف" },
+    { id:"z7", fr:"Vous me manquez", phon:"twa77echtkoum", ar:"توحشتكم" },
+    { id:"z8", fr:"Embrasse les enfants pour moi", phon:"bousi liya ddrari", ar:"بوسي ليا الدراري" },
+    { id:"z9", fr:"On se rappelle", phon:"n3aytou lik men be3d", ar:"نعيطو ليك من بعد" },
+    { id:"z10", fr:"Je dois raccrocher, pardon", phon:"khessni nqte3, sme7i liya", ar:"خصني نقطع، سمحي ليا" },
+    { id:"z11", fr:"Salue tout le monde", phon:"sellmi liya 3la koulchi", ar:"سلمي ليا على كلشي" },
+    { id:"z12", fr:"Prends soin de toi, a bientot", phon:"thelli f rassek, bslama", ar:"تهلي فراسك، بسلامة" }
+  ]
+},
+{
+  id:"dehors", name:"Dehors : taxi, souk, chiffres", desc:"Sortir seule sans stress. Les chiffres, les prix, et le piege des riyals.",
+  items:[
+    { id:"d1", fr:"Un, deux, trois", phon:"wa7ed, jouj, tlata", ar:"واحد، جوج، تلاتة" },
+    { id:"d2", fr:"Quatre, cinq, six", phon:"reb3a, khamsa, setta", ar:"ربعة، خمسة، ستة" },
+    { id:"d3", fr:"Sept, huit, neuf, dix", phon:"seb3a, tmnya, tes3oud, 3achra", ar:"سبعة، تمنية، تسعود، عشرة" },
+    { id:"d4", fr:"Vingt, cinquante, cent", phon:"3achrin, khamsin, mya", ar:"عشرين، خمسين، مية" },
+    { id:"d5", fr:"Combien ca coute ?", phon:"b ch7al ?", ar:"بشحال؟" },
+    { id:"d6", fr:"Attention : le prix en riyals", phon:"chnou b ddirham ?", ar:"شنو بالدرهم؟", note:"<b>Le piege</b> : au souk on annonce souvent les prix en riyals. 1 dirham = 20 riyals. Si on te dit deux mille, c est 100 dirhams. Demande toujours le prix <b>b ddirham</b>." },
+    { id:"d7", fr:"C est trop cher", phon:"ghali bezzaf", ar:"غالي بزاف" },
+    { id:"d8", fr:"Baisse un peu", phon:"nqes chwiya 3afak", ar:"نقص شوية عافاك" },
+    { id:"d9", fr:"Je regarde seulement, merci", phon:"ghir kanchouf, chokran", ar:"غير كنشوف، شكرا", note:"La phrase anti-harcelement commercial. Dite calmement, elle marche." },
+    { id:"d10", fr:"Je prends celui-la", phon:"ghadi nakhod hada", ar:"غادي ناخد هادا" },
+    { id:"d11", fr:"Emmene-moi a ..., s il te plait", phon:"ddini l ... 3afak", ar:"ديني ل... عافاك" },
+    { id:"d12", fr:"Mets le compteur, s il te plait", phon:"khdem lkontour 3afak", ar:"خدم الكونتور عافاك", note:"En petit taxi, a dire en montant, avant de demarrer. Ca evite 90 pour cent des discussions." },
+    { id:"d13", fr:"Arrete-toi ici", phon:"wqef hna 3afak", ar:"وقف هنا عافاك" },
+    { id:"d14", fr:"Ou est ... ?", phon:"fin kayn ... ?", ar:"فين كاين؟" },
+    { id:"d15", fr:"A droite / a gauche / tout droit", phon:"3la limen / 3la liser / nichan", ar:"على ليمن، على ليسر، نيشان" },
+    { id:"d16", fr:"Je me suis perdue", phon:"twedert", ar:"توضرت" },
+    { id:"d17", fr:"Aidez-moi s il vous plait", phon:"3awnouni 3afak", ar:"عاونوني عافاك" },
+    { id:"d18", fr:"L addition, s il vous plait", phon:"l7sab 3afak", ar:"الحساب عافاك" },
+    { id:"d19", fr:"Je cherche la pharmacie", phon:"kanqelleb 3la ffarmasyan", ar:"كنقلب على الفارماسيان" },
+    { id:"d20", fr:"J attends mon copain ici", phon:"katsenna s7abi hna", ar:"كنتسنى صاحبي هنا", note:"Utile pour couper court quand on t aborde dans la rue." }
+  ]
+},
+{
+  id:"occasions", name:"Fetes et grands moments", desc:"Aid, mariage, naissance, deuil. Les phrases qu on attend de toi ces jours-la.",
+  items:[
+    { id:"o1", fr:"Joyeux Aid", phon:"3id moubarak sa3id", ar:"عيد مبارك سعيد", note:"Reponse : <b>Allah ybarek fik</b> ou <b>3wachr mebrouka</b>." },
+    { id:"o2", fr:"Bon Ramadan", phon:"ramdan moubarak", ar:"رمضان مبارك" },
+    { id:"o3", fr:"Bonne rupture du jeune", phon:"ss77a ftourkoum", ar:"صحة فطوركم", note:"A dire au moment du <b>ftour</b>, quand la table se remplit apres l appel a la priere." },
+    { id:"o4", fr:"Felicitations !", phon:"mebrouk", ar:"مبروك", note:"Reponse universelle : <b>Allah ybarek fik</b>." },
+    { id:"o5", fr:"Que Dieu te benisse (la reponse)", phon:"Allah ybarek fik", ar:"الله يبارك فيك" },
+    { id:"o6", fr:"Felicitations pour le bebe", phon:"mebrouk lmouloud", ar:"مبروك المولود" },
+    { id:"o7", fr:"Que Dieu te le garde", phon:"Allah ykhellih lik", ar:"الله يخليه ليك" },
+    { id:"o8", fr:"Bon retablissement", phon:"Allah ychafik", ar:"الله يشافيك" },
+    { id:"o9", fr:"Mes condoleances", phon:"Allah y3tikoum ssber", ar:"الله يعطيكم الصبر", note:"On dit aussi <b>Allah yrhemou</b> (que Dieu lui fasse misericorde) pour la personne decedee. Ce sont les deux seules phrases a connaitre ; le reste est du silence et de la presence." },
+    { id:"o10", fr:"Que Dieu lui fasse misericorde", phon:"Allah yrhemou", ar:"الله يرحمو", alt:{ l:"pour une femme", phon:"Allah yrhemha", ar:"الله يرحمها" } },
+    { id:"o11", fr:"Bon voyage", phon:"triq ssalama", ar:"طريق السلامة" },
+    { id:"o12", fr:"Bon anniversaire", phon:"3id milad sa3id", ar:"عيد ميلاد سعيد" },
+    { id:"o13", fr:"Que Dieu vous garde ensemble", phon:"Allah ykhellikoum lb3diyatkoum", ar:"الله يخليكم لبعضياتكم" },
+    { id:"o14", fr:"Merci pour l invitation", phon:"chokran 3la dd3wa", ar:"شكرا على الدعوة" }
+  ]
+},
+{
+  id:"amour", name:"Avec lui", desc:"Pour l entrainement quotidien : c est lui ton prof, autant que ce soit agreable.",
+  items:[
+    { id:"a1", fr:"Je t aime", phon:"kanbghik", ar:"كنبغيك", note:"Le je t aime du quotidien. Plus intense : <b>kanbghik bezzaf</b>." },
+    { id:"a2", fr:"Tu me manques", phon:"twa77echtek", ar:"توحشتك" },
+    { id:"a3", fr:"Mon amour, ma vie", phon:"3omri", ar:"عمري", note:"Litteralement mon age, ma vie. Le petit nom le plus courant, avec <b>7bibi</b>." },
+    { id:"a4", fr:"Mon coeur", phon:"qalbi", ar:"قلبي" },
+    { id:"a5", fr:"Je pense a toi", phon:"kanfekker fik", ar:"كنفكر فيك" },
+    { id:"a6", fr:"Apprends-moi un mot en darija", phon:"3allemni chi kelma b ddarija", ar:"علمني شي كلمة بالدارجة", note:"A envoyer en vocal tous les jours. C est ta methode, en une phrase." },
+    { id:"a7", fr:"Comment on dit ca ?", phon:"kifach kaygoulou hadi ?", ar:"كيفاش كيقولو هادي؟" },
+    { id:"a8", fr:"Ecoute mon accent", phon:"sme3 la3ksan dyali", ar:"سمع لاكسان ديالي" },
+    { id:"a9", fr:"J ai bien dit ?", phon:"gultha mezyan ?", ar:"كلتها مزيان؟" },
+    { id:"a10", fr:"Ta mere est adorable", phon:"mmwek drifa bezzaf", ar:"مك ظريفة بزاف", note:"A lui dire a lui, et surtout devant elle." },
+    { id:"a11", fr:"Que Dieu te garde pour moi", phon:"Allah ykhellik liya", ar:"الله يخليك ليا" },
+    { id:"a12", fr:"Tu es beau", phon:"nta zwin", ar:"نتا زوين" }
+  ]
+}
+];
+
+</script>
+<script>
+/* Dar Darija — logique de l app. Tout est local au telephone. */
+(function(){
+"use strict";
+
+/* ---------------------------------------------------------------- etat */
+const KEY = "dardarija.v1";
+const DAY = 864e5;
+const ALL = THEMES.flatMap(t => t.items.map(i => Object.assign({theme:t.id}, i)));
+const BY_ID = new Map(ALL.map(i => [i.id, i]));
+const INTERVALS = [0, 1, 2, 5, 12, 30];   /* jours, par boite Leitner */
+
+const S = load();
+function load(){
+  let s = null;
+  try { s = JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e){}
+  return Object.assign({ srs:{}, lastDay:null, streak:0, sessions:0, rate:0.8, theme:"auto" }, s || {});
+}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+const dayKey = d => new Date(d||Date.now()).toISOString().slice(0,10);
+
+/* semaine du parcours : six seances par semaine, on avance en travaillant */
+function week(){ return Math.min(PROGRAM.length, Math.floor(S.sessions/6) + 1); }
+function weekPlan(){ return PROGRAM[week()-1]; }
+function dueItems(){ const now = Date.now(); return ALL.filter(i => S.srs[i.id] && S.srs[i.id].due <= now); }
+function seenCount(list){ return list.filter(i => S.srs[i.id]).length; }
+function masteredCount(list){ return list.filter(i => S.srs[i.id] && S.srs[i.id].box >= 5).length; }
+function freshFor(themeIds, n){
+  const out = [];
+  for (const tid of themeIds){
+    for (const i of ALL) if (i.theme === tid && !S.srs[i.id]){ out.push(i); if (out.length >= n) return out; }
+  }
+  for (const i of ALL) if (!S.srs[i.id]){ out.push(i); if (out.length >= n) return out; }
+  return out;
+}
+function markSession(){
+  const k = dayKey();
+  if (S.lastDay === k) return;
+  const yesterday = dayKey(Date.now() - DAY);
+  S.streak = (S.lastDay === yesterday) ? S.streak + 1 : 1;
+  S.lastDay = k; S.sessions++; save(); paintChrome();
+}
+
+/* -------------------------------------------------------------- audio */
+/* Priorite : la voix enregistree (celle de ton copain) ; sinon la synthese. */
+const Rec = {
+  db:null, have:new Set(),
+  open(){
+    return new Promise(res => {
+      let r; try { r = indexedDB.open("dardarija-audio", 1); } catch(e){ return res(null); }
+      r.onupgradeneeded = () => { r.result.createObjectStore("clips"); };
+      r.onsuccess = () => res(r.result);
+      r.onerror = () => res(null);
+    });
+  },
+  async init(){
+    this.db = await this.open();
+    if (!this.db) return;
+    await new Promise(res => {
+      try {
+        const q = this.db.transaction("clips").objectStore("clips").getAllKeys();
+        q.onsuccess = () => { (q.result||[]).forEach(k => this.have.add(k)); res(); };
+        q.onerror = () => res();
+      } catch(e){ res(); }
+    });
+  },
+  put(id, blob){
+    return new Promise(res => {
+      if (!this.db) return res(false);
+      try {
+        const tx = this.db.transaction("clips","readwrite");
+        tx.objectStore("clips").put(blob, id);
+        tx.oncomplete = () => { this.have.add(id); res(true); };
+        tx.onerror = () => res(false);
+      } catch(e){ res(false); }
+    });
+  },
+  get(id){
+    return new Promise(res => {
+      if (!this.db) return res(null);
+      try {
+        const q = this.db.transaction("clips").objectStore("clips").get(id);
+        q.onsuccess = () => res(q.result || null);
+        q.onerror = () => res(null);
+      } catch(e){ res(null); }
+    });
+  },
+  del(id){
+    return new Promise(res => {
+      if (!this.db) return res();
+      try {
+        const tx = this.db.transaction("clips","readwrite");
+        tx.objectStore("clips").delete(id);
+        tx.oncomplete = () => { this.have.delete(id); res(); };
+        tx.onerror = () => res();
+      } catch(e){ res(); }
+    });
+  }
+};
+
+let voices = [], player = null;
+function arVoice(){
+  return voices.find(v => /^ar[-_]MA/i.test(v.lang)) || voices.find(v => /^ar/i.test(v.lang)) || null;
+}
+function refreshVoices(){
+  try { voices = speechSynthesis.getVoices() || []; } catch(e){ voices = []; }
+  const info = document.getElementById("voiceInfo");
+  if (!info) return;
+  const v = arVoice();
+  info.textContent = v
+    ? "Voix arabe trouvee sur cet appareil : " + v.name + ". Elle sert de depannage."
+    : "Pas de voix arabe sur cet appareil. Le bouton ecouter ne marchera que sur les phrases ou tu as enregistre une vraie voix. Sur iPhone : Reglages, Accessibilite, Contenu enonce, Voix, Arabe.";
+}
+async function play(id){
+  const item = BY_ID.get(id); if (!item) return;
+  try { speechSynthesis.cancel(); } catch(e){}
+  if (player){ player.pause(); player = null; }
+  const blob = Rec.have.has(id) ? await Rec.get(id) : null;
+  if (blob){
+    player = new Audio(URL.createObjectURL(blob));
+    player.play().catch(()=>{});
+    return;
+  }
+  const v = arVoice();
+  try {
+    const u = new SpeechSynthesisUtterance(item.ar);
+    u.lang = v ? v.lang : "ar-MA";
+    if (v) u.voice = v;
+    u.rate = S.rate;
+    speechSynthesis.speak(u);
+  } catch(e){}
+}
+async function playBlob(blob){
+  if (!blob) return;
+  if (player){ player.pause(); }
+  player = new Audio(URL.createObjectURL(blob));
+  player.play().catch(()=>{});
+}
+
+/* enregistrement : un appui demarre, un deuxieme arrete (10 s maxi) */
+let recorder = null, recTarget = null;
+async function toggleRecord(btn, onDone){
+  if (recorder){ stopRecord(); return; }
+  let stream;
+  try { stream = await navigator.mediaDevices.getUserMedia({audio:true}); }
+  catch(e){ btn.textContent = "micro refuse"; return; }
+  const chunks = [];
+  try { recorder = new MediaRecorder(stream); }
+  catch(e){ stream.getTracks().forEach(t=>t.stop()); btn.textContent = "micro indisponible"; return; }
+  recTarget = btn;
+  const label = btn.innerHTML;
+  btn.dataset.state = "rec";
+  btn.innerHTML = "<span>arreter</span>";
+  recorder.ondataavailable = e => chunks.push(e.data);
+  recorder.onstop = () => {
+    stream.getTracks().forEach(t => t.stop());
+    btn.dataset.state = ""; btn.innerHTML = label;
+    recorder = null; recTarget = null;
+    onDone(new Blob(chunks, {type: chunks[0] ? chunks[0].type : "audio/webm"}));
+  };
+  recorder.start();
+  setTimeout(() => { if (recorder) stopRecord(); }, 10000);
+}
+function stopRecord(){ try { recorder && recorder.stop(); } catch(e){ recorder = null; } }
+
+/* ------------------------------------------------------------- rendus */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[<>&]/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
+const ICON = {
+  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.2v13.6L19 12z"/></svg>',
+  mic :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="9" y="2.6" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.4"/></svg>',
+  star:'<svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.6 15 5.4l4.7-.8-.8 4.7 3.8 3-3.8 3 .8 4.7-4.7-.8-3 3.8-3-3.8-4.7.8.8-4.7-3.8-3 3.8-3-.8-4.7 4.7.8z"/></svg>'
+};
+
+function phraseCard(item){
+  const st = S.srs[item.id];
+  const mastered = st && st.box >= 5;
+  const hasRec = Rec.have.has(item.id);
+  return '<article class="phrase' + (mastered ? " mastered" : "") + '" data-id="' + item.id + '">'
+    + '<div class="fr">' + esc(item.fr) + (mastered ? " " + ICON.star : "") + '</div>'
+    + '<p class="phon">' + esc(item.phon) + '</p>'
+    + (item.alt ? '<div class="alt"><b>' + esc(item.alt.l) + '</b> &middot; ' + esc(item.alt.phon) + '</div>' : "")
+    + '<div class="ar" aria-hidden="true">' + esc(item.ar) + '</div>'
+    + (item.note ? '<div class="note">' + item.note + '</div>' : "")
+    + '<div class="controls">'
+      + '<button class="chip play" data-act="play">' + ICON.play + ' Ecouter</button>'
+      + '<button class="chip rec' + (hasRec ? " has" : "") + '" data-act="ref">' + ICON.mic + (hasRec ? " Sa voix, enregistree" : " Enregistrer sa voix") + '</button>'
+      + '<button class="chip" data-act="me">' + ICON.mic + ' Moi</button>'
+      + (hasRec ? '<button class="chip" data-act="del" aria-label="Supprimer la voix enregistree">&times;</button>' : "")
+    + '</div></article>';
+}
+
+/* clics sur les fiches, delegue au document */
+document.addEventListener("click", async e => {
+  const btn = e.target.closest("[data-act]");
+  if (!btn) return;
+  const card = btn.closest("[data-id]"); if (!card) return;
+  const id = card.dataset.id;
+  const act = btn.dataset.act;
+  if (act === "play") play(id);
+  if (act === "ref") toggleRecord(btn, async blob => {
+    await Rec.put(id, blob);
+    refreshCard(card, id);
+    playBlob(blob);
+  });
+  if (act === "me") toggleRecord(btn, blob => playBlob(blob));
+  if (act === "del"){ await Rec.del(id); refreshCard(card, id); }
+});
+function refreshCard(card, id){
+  const item = BY_ID.get(id); if (!item) return;
+  const tmp = document.createElement("div");
+  tmp.innerHTML = phraseCard(item);
+  card.replaceWith(tmp.firstChild);
+}
+
+/* --------------------------------------------------------- aujourd hui */
+function paintToday(){
+  const p = weekPlan(), due = dueItems().length;
+  const news = freshFor(p.themes, 5);
+  const t1 = THEMES.find(t => t.id === p.themes[0]);
+  $("#todayCard").innerHTML =
+      '<div class="today-head">'
+    +   '<span class="wk">Semaine ' + p.n + ' sur 8</span>'
+    +   '<h2>' + esc(p.title) + '</h2>'
+    +   '<span class="sub">' + esc(p.desc) + '</span>'
+    + '</div>'
+    + '<ul class="steps">'
+    +   '<li><span class="n">1</span><span><span class="t">Reviser ' + (due || "0") + ' phrase' + (due>1?"s":"") + '</span>'
+    +     '<span class="d">' + (due ? "Elles sont sur le point de sortir de ta memoire. Cinq minutes." : "Rien a reviser pour l instant. Passe a l etape 2.") + '</span>'
+    +     '<span class="btn-row" style="margin-top:9px"><button class="btn" data-go2="drill"' + (due?"":" disabled") + '>Reviser</button></span></span></li>'
+    +   '<li><span class="n">2</span><span><span class="t">Apprendre 5 phrases : ' + esc(t1 ? t1.name : "") + '</span>'
+    +     '<span class="d">Ecoute, puis repete a voix haute trois fois. Pas dans ta tete : a voix haute.</span>'
+    +     '<span class="btn-row" style="margin-top:9px"><button class="btn ghost" data-open="' + esc(p.themes[0]) + '">Ouvrir le theme</button></span></span></li>'
+    +   '<li><span class="n">3</span><span><span class="t">Envoyer le vocal du soir</span>'
+    +     '<span class="d">Les trois phrases ci-dessous, en vocal, a ton copain. Vingt secondes.</span></span></li>'
+    + '</ul>';
+
+  const vocal = (news.length ? news : ALL.filter(i => S.srs[i.id]).slice(0,3)).slice(0,3);
+  $("#vocal").innerHTML = vocal.map(phraseCard).join("");
+
+  const done = ALL.filter(i => S.srs[i.id]).length;
+  $("#tiles").innerHTML =
+      tile(done, "phrases vues")
+    + tile(masteredCount(ALL), "acquises")
+    + tile(S.sessions, "seances");
+}
+const tile = (v,k) => '<div class="tile"><div class="v">' + v + '</div><div class="k">' + k + '</div></div>';
+
+/* -------------------------------------------------------------- themes */
+function paintThemes(){
+  $("#themeList").innerHTML = THEMES.map(t => {
+    const n = t.items.length, m = masteredCount(t.items), s = seenCount(t.items);
+    return '<button class="theme' + (t.key ? " key" : "") + '" data-open="' + t.id + '">'
+      + '<span class="name">' + esc(t.name) + (t.key ? ' <span class="tagline">essentiel</span>' : "") + '</span>'
+      + '<span class="desc">' + esc(t.desc) + '</span>'
+      + '<span class="meter"><span class="count">' + m + " / " + n + '</span>'
+      + '<span class="bar"><i style="width:' + Math.round(100*(s?Math.max(m/n,0.04):0)) + '%"></i></span></span>'
+      + '</button>';
+  }).join("");
+}
+function openTheme(id){
+  const t = THEMES.find(x => x.id === id); if (!t) return;
+  go("themes");
+  $("#themesIndex").classList.add("hidden");
+  const d = $("#themeDetail");
+  d.classList.remove("hidden");
+  d.innerHTML = '<button class="btn quiet" data-back="1" style="margin-bottom:16px">&larr; Tous les themes</button>'
+    + '<p class="eyebrow">' + t.items.length + ' phrases</p>'
+    + '<h1>' + esc(t.name) + '</h1><p>' + esc(t.desc) + '</p>'
+    + '<div style="margin:16px 0 20px"><button class="btn block" data-drill="' + t.id + '">S entrainer sur ce theme</button></div>'
+    + t.items.map(phraseCard).join("");
+  window.scrollTo(0,0);
+}
+function closeTheme(){
+  $("#themeDetail").classList.add("hidden");
+  $("#themesIndex").classList.remove("hidden");
+  paintThemes();
+}
+
+/* -------------------------------------------------------------- drills */
+let Q = [], qi = 0, qn = 0, shown = false;
+function startDrill(themeId){
+  const due = dueItems();
+  const plan = weekPlan();
+  let list;
+  if (themeId){
+    const t = THEMES.find(x => x.id === themeId);
+    list = t.items.map(i => Object.assign({theme:t.id}, i));
+  } else {
+    list = shuffle(due).slice(0, 18).concat(freshFor(plan.themes, due.length < 6 ? 5 : 3));
+  }
+  Q = list; qi = 0; qn = list.length; shown = false;
+  go("drill"); paintDrill();
+}
+function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function paintDrill(){
+  const root = $("#drillRoot");
+  if (!Q.length){
+    const due = dueItems().length;
+    root.innerHTML = '<p class="eyebrow">Revision</p><h1>' + (due ? due + " phrases t attendent" : "Rien a reviser maintenant") + '</h1>'
+      + '<p>' + (due ? "L app te ressort chaque phrase juste avant le moment ou tu l aurais oubliee." :
+         "Reviens plus tard, ou apprends de nouvelles phrases : elles entreront automatiquement dans tes revisions.") + '</p>'
+      + '<div class="btn-row" style="margin-top:14px"><button class="btn" data-drill="">Commencer la seance</button>'
+      + '<button class="btn ghost" data-go2="themes">Voir les themes</button></div>';
+    return;
+  }
+  if (qi >= Q.length){
+    markSession();
+    root.innerHTML = '<div class="center" style="padding:30px 0">' + ICON.star
+      + '<h1 style="margin-top:10px">Seance terminee</h1>'
+      + '<p style="margin:0 auto 18px">' + qn + ' phrases passees. Envoie maintenant ton vocal du soir, sinon ca reste de la theorie.</p>'
+      + '<div class="btn-row" style="justify-content:center"><button class="btn" data-go2="today">Le vocal du soir</button>'
+      + '<button class="btn ghost" data-drill="">Encore une seance</button></div></div>';
+    paintToday(); paintChrome(); return;
+  }
+  const item = Q[qi];
+  const st = S.srs[item.id];
+  const listen = !st || st.box <= 2;      /* on reconnait d abord, on produit ensuite */
+  root.innerHTML =
+      '<div class="drill-top"><span class="progressline"><i style="width:' + Math.round(100*qi/qn) + '%"></i></span>'
+    + '<span class="muted" style="font-variant-numeric:tabular-nums">' + (qi+1) + " / " + qn + '</span></div>'
+    + '<div class="drill">'
+    + '<span class="mode ' + (listen ? "listen" : "speak") + '">' + (listen ? "Comprendre" : "Parler") + '</span>'
+    + '<div class="prompt" data-id="' + item.id + '">'
+      + (listen
+          ? '<button class="bigplay" data-act="play" aria-label="Ecouter la phrase">' + ICON.play + '</button>'
+            + '<p class="hint">Ecoute, puis devine le sens.</p>'
+          : '<p class="ask">' + esc(item.fr) + '</p><p class="hint">Dis-le a voix haute, maintenant.</p>')
+      + (shown
+          ? '<div class="reveal">'
+            + (listen ? '<div class="fr" style="margin-bottom:8px">' + esc(item.fr) + '</div>' : "")
+            + '<p class="phon">' + esc(item.phon) + '</p>'
+            + (item.alt ? '<div class="alt"><b>' + esc(item.alt.l) + '</b> &middot; ' + esc(item.alt.phon) + '</div>' : "")
+            + (item.note ? '<div class="note" style="text-align:left">' + item.note + '</div>' : "")
+            + '<div class="controls" style="justify-content:center">'
+              + '<button class="chip play" data-act="play">' + ICON.play + ' Ecouter</button>'
+              + '<button class="chip" data-act="me">' + ICON.mic + ' Moi</button></div>'
+            + '</div>'
+          : "")
+    + '</div>'
+    + (shown
+        ? '<div class="grade">'
+          + '<button class="g1" data-grade="1">A revoir<small>je sechais</small></button>'
+          + '<button class="g2" data-grade="2">Presque<small>hesitation</small></button>'
+          + '<button class="g3" data-grade="3">Je l ai<small>sortie sans effort</small></button></div>'
+        : '<button class="btn block" data-reveal="1">Voir la reponse</button>')
+    + '</div>';
+  if (listen && !shown) setTimeout(() => play(item.id), 220);
+}
+function grade(g){
+  const item = Q[qi];
+  const st = S.srs[item.id] || { box:1, seen:0 };
+  st.seen++;
+  if (g === 1) st.box = 1;
+  else if (g === 2) st.box = Math.max(1, st.box);
+  else st.box = Math.min(5, st.box + 1);
+  const days = INTERVALS[g === 1 ? 0 : st.box];
+  st.due = Date.now() + (days ? days*DAY : 6e5);
+  S.srs[item.id] = st; save();
+  if (g === 1 && Q.length - qi > 1) Q.splice(Math.min(qi + 4, Q.length), 0, item);
+  qi++; shown = false; paintDrill(); paintChrome();
+}
+
+/* --------------------------------------------------------------- guide */
+function paintGuide(){
+  $("#rules").innerHTML = GUIDE.rules.map(r =>
+    '<li><span><b>' + esc(r.t) + '</b><span>' + esc(r.d) + '</span></span></li>').join("");
+  $("#sounds").innerHTML = GUIDE.sounds.map(s =>
+    '<div class="sound"><div class="sym">' + esc(s.sym) + '</div><div><h3>' + esc(s.name) + '</h3>'
+    + '<div class="how">' + esc(s.how) + '</div><div class="ex">' + esc(s.ex) + '</div></div></div>').join("");
+  const w = week();
+  $("#weeks").innerHTML = PROGRAM.map(p =>
+    '<div class="week' + (p.n === w ? " now" : "") + '"><div class="no">SEM ' + p.n + '</div>'
+    + '<div><div class="t">' + esc(p.title) + (p.n === w ? " &middot; tu es ici" : "") + '</div>'
+    + '<div class="d">' + esc(p.desc) + '</div></div></div>').join("");
+  $("#rate").value = S.rate;
+}
+
+/* ------------------------------------------------------------ chrome */
+function paintChrome(){
+  const d = dueItems().length;
+  const sk = $("#streak");
+  sk.textContent = S.streak + (S.streak > 1 ? " jours d affilee" : " jour");
+  sk.classList.toggle("hidden", S.streak === 0);
+  $("#dueDot").classList.toggle("hidden", d === 0);
+}
+function go(view){
+  document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id === "v-" + view));
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.go === view)));
+  if (view === "today") paintToday();
+  if (view === "themes"){ if ($("#themeDetail").classList.contains("hidden")) paintThemes(); }
+  if (view === "drill" && !Q.length) paintDrill();
+  if (view === "guide") paintGuide();
+  window.scrollTo(0,0);
+}
+function applyTheme(){
+  if (S.theme === "auto") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", S.theme);
+}
+
+/* ------------------------------------------------------------- events */
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-go],[data-go2],[data-open],[data-back],[data-drill],[data-reveal],[data-grade]");
+  if (!t) return;
+  if (t.dataset.go) go(t.dataset.go);
+  else if (t.dataset.go2) go(t.dataset.go2);
+  else if (t.dataset.open !== undefined && t.hasAttribute("data-open")) openTheme(t.dataset.open);
+  else if (t.dataset.back) closeTheme();
+  else if (t.hasAttribute("data-drill")) startDrill(t.dataset.drill || null);
+  else if (t.dataset.reveal){ shown = true; paintDrill(); const it = Q[qi]; if (it && S.srs[it.id] && S.srs[it.id].box > 2) setTimeout(()=>play(it.id), 150); }
+  else if (t.dataset.grade) grade(Number(t.dataset.grade));
+});
+$("#themeBtn").addEventListener("click", () => {
+  S.theme = S.theme === "auto" ? "dark" : S.theme === "dark" ? "light" : "auto";
+  save(); applyTheme();
+});
+$("#rate").addEventListener("input", e => { S.rate = Number(e.target.value); save(); });
+$("#resetBtn").addEventListener("click", () => {
+  if (!confirm("Effacer ta progression et les voix enregistrees ? C est definitif.")) return;
+  Object.keys(S.srs).forEach(k => delete S.srs[k]);
+  S.streak = 0; S.sessions = 0; S.lastDay = null; save();
+  Rec.have.forEach(id => Rec.del(id));
+  location.reload();
+});
+
+/* --------------------------------------------------------------- boot */
+applyTheme();
+try { speechSynthesis.onvoiceschanged = refreshVoices; } catch(e){}
+refreshVoices(); setTimeout(refreshVoices, 400);
+Rec.init().then(() => { paintToday(); paintThemes(); paintChrome(); });
+paintToday(); paintThemes(); paintGuide(); paintChrome();
+})();
+
+</script>
