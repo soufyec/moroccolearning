@@ -4,16 +4,36 @@ Une méthode et une app pour apprendre à **parler** le darija marocain avec la 
 Pas de lecture, pas d'écriture, pas de grammaire : uniquement l'oreille et la bouche.
 
 **L'app :** ouvre `dist/dar-darija.html` dans un navigateur. Un seul fichier, il marche hors ligne,
-tout est stocké dans ton téléphone (rien n'est envoyé nulle part).
+tout est stocké dans ton téléphone (rien n'est envoyé nulle part, personne ne voit où tu en es).
 
-Sur iPhone : ouvre le fichier dans Safari, puis *Partager → Sur l'écran d'accueil*. Tu auras une
-icône comme une vraie app.
+Sur iPhone : ouvre le fichier dans Safari, puis *Partager → Sur l'écran d'accueil*.
 
 ---
 
-## Ce qu'il y a dedans
+## La prononciation est écrite pour une bouche française
 
-**242 phrases, 15 thèmes**, choisies pour un seul usage : tenir une soirée chez sa famille.
+La ligne principale de chaque fiche se lit **comme du français**. Trois conventions seulement :
+
+| On écrit | Ça se prononce |
+|---|---|
+| `h` | h soufflé du fond de la gorge, jamais muet — `l-hammdou-llah` |
+| `kh` | la jota, comme dans « khôl » — `khouya` (mon frère) |
+| `gh` | le r grasseyé de Paris, tu l'as déjà — `l-maghrib` |
+| `r` | roulé, à l'espagnole — `merhba` |
+| `â` | le son du fond de gorge ; si tu le rates, dis un a bien ouvert — `âafak` |
+| `q` | k prononcé tout au fond — `l-qahoua` |
+| `-` | ne se prononce pas : découpe le mot et t'empêche de nasaliser — `kann-bghi` |
+
+On écrit **ine, ane, one** et jamais in, an, on : le darija n'a aucune nasale française.
+`bnine`, `mezyane`, `fine`.
+
+Un réglage permet de basculer sur l'**arabizi** (`bnin bezzaf`, avec les chiffres 3 et 7) : c'est ce
+que les Marocains écrivent vraiment en SMS, tu finiras par le croiser. Les deux graphies sont
+toujours affichées, l'une en grand, l'autre en petit.
+
+## Ce qu'il y a dedans — 519 fiches
+
+**242 phrases, 15 thèmes** — pour tenir une soirée chez sa famille.
 
 | Thème | À quoi ça sert |
 |---|---|
@@ -22,62 +42,60 @@ icône comme une vraie app.
 | À table | Complimenter la cuisine, refuser un quatrième service sans vexer |
 | Saluer, se présenter, politesse | Les rituels qui ouvrent et ferment chaque visite |
 | Papoter, la famille, chez eux | Ne pas rester muette dans le salon |
-| Dehors, téléphone, fêtes | Taxi, souk, appels avec sa mère, Aïd, mariage, condoléances |
-| Avec lui | De quoi transformer ton copain en prof quotidien |
+| Dehors, téléphone, fêtes | Taxi, souk, appels, Aïd, mariage, condoléances |
+| Avec lui | Les phrases du quotidien à deux |
 
-Chaque fiche donne : le sens en français, **la phonétique en gros** (lecture à la française), la
-variante quand tu parles à une femme plutôt qu'à un homme, et une note culturelle quand se tromper
-coûte cher (le `tbarkallah` contre le mauvais œil, les prix en riyals, la 7chouma…).
+**Les briques**, pour fabriquer tes propres phrases au lieu d'en réciter :
 
-## Comment l'app te fait travailler
+- **134 mots** classés par famille (les gens, à table, la maison, le temps, dehors, les adjectifs,
+  le corps, les petits mots qui relient).
+- **24 verbes, 83 formes** — seulement celles qui servent : *je*, *tu* à une femme, le passé, le
+  futur, l'ordre. `kann-akoul` (je mange), `klite` (j'ai mangé), `ghadi nakoul` (je vais manger).
+- **20 moules à trous** avec leurs exemples : `bghite ___` (je veux ___), `ma ___ ch` (la négation),
+  `fine kayne ___ ?` (où est ___ ?), `khessni ___` (il me faut ___). Une phrase apprise sert une
+  fois ; un moule sert cinquante fois.
 
-- **Écouter → répéter à voix haute → s'enregistrer → comparer.** Le bouton *Moi* enregistre ta voix
-  et te la rejoue juste après la référence.
-- **Fais enregistrer ton copain.** Sur chaque fiche, *Enregistrer sa voix* garde sa prononciation
-  dans le téléphone : c'est ta vraie référence. La voix de synthèse lit de l'arabe classique, elle
-  donne le squelette du mot, pas l'accent marocain. Un thème enregistré par semaine suffit.
-- **Révisions espacées** (5 boîtes) : l'app ressort chaque phrase juste avant le moment où tu
-  l'aurais oubliée. Deux modes selon ta maîtrise — *Comprendre* (tu entends, tu devines) puis
-  *Parler* (tu vois le français, tu dois le sortir de ta bouche).
-- **Parcours en 8 semaines**, six séances par semaine, 12 minutes par séance. Tu avances en
-  travaillant, pas quand le calendrier avance.
+Chaque fiche donne le sens, la prononciation, la variante quand tu parles à une femme plutôt qu'à un
+homme, et une note culturelle quand se tromper coûte cher : le `tbaraka-llah` contre le mauvais œil,
+les prix annoncés en riyals au souk, la *hchouma*.
 
-## La méthode, en huit règles
+## La méthode
 
-1. **Zéro écriture, zéro grammaire.** Tu apprends des blocs entiers, pas un système.
-2. **Toujours à voix haute.** Une phrase lue des yeux ne sort pas de ta bouche le jour J.
-3. **La voix de ton copain est la référence**, pas celle du téléphone.
-4. **Comprendre avant de parler.** En famille, tu écoutes 80 % du temps.
-5. **12 minutes par jour battent 2 heures le dimanche.**
-6. **Le vocal du soir** : chaque soir, 20 secondes de vocal à ton copain avec les phrases du jour.
-   C'est le seul exercice qui fait passer de « je sais la dire » à « je l'ai dite ».
-7. **Cinq mots te sauvent partout** : `bezzaf` (beaucoup), `chwiya` (un peu), `safi` (c'est bon),
-   `wakha` (d'accord), `nchallah` (si Dieu veut).
-8. **Vise 30 phrases, pas la perfection.** Sa famille ne te note pas.
+Neuf règles, dans l'app. Les trois qui comptent le plus :
 
-## Les sons à connaître
+1. **Ne récite pas, fabrique.** Dès que tu tiens un moule, change le mot dedans.
+2. **Comprendre avant de parler.** En famille, tu écouteras 80 % du temps.
+3. **Le monologue du soir.** Une minute, seule, à voix haute, sur ta journée, avec le peu que tu
+   sais. Le bouton *M'écouter* enregistre ta voix et te la rejoue : c'est en t'entendant que tu
+   corriges ton accent.
 
-| Symbole | Son |
-|---|---|
-| `7` | h soufflé du fond de la gorge (`l7amdoullah`) |
-| `kh` | la jota espagnole (`khoya`, mon frère) |
-| `gh` | le r français grasseyé — tu l'as déjà (`lmaghrib`) |
-| `r` | roulé, à l'espagnole (`mer7ba`) |
-| `3` | gorge serrée, un a très ouvert (`3afak`) |
-| `q` | k prononcé tout au fond (`qhwa`, café) |
-| `ou` | toujours le ou français, jamais le u de « tu » |
+**Rien ne passe par lui.** Aucune étape ne demande son aide, sa voix, ni un message : tu peux
+travailler huit semaines sans qu'il en sache rien. Pour l'oreille, l'app te dit où trouver du darija
+réel toute seule — séries marocaines, radio, vlogs, une chanson en boucle.
+
+L'app te fait réviser en **répétitions espacées** (5 boîtes) et alterne deux modes : *Comprendre*
+(tu entends, tu devines) tant que la phrase est fraîche, puis *Parler* (tu vois le français, tu dois
+la sortir de ta bouche). Parcours en 8 semaines, six séances par semaine, 12 minutes par séance.
+
+⚠️ La voix du téléphone lit de l'**arabe classique** : elle donne le squelette du mot, pas l'accent
+marocain. Et si aucune voix arabe n'est installée sur l'appareil, le bouton *Écouter* reste muet —
+l'app te le dit et t'indique où l'installer (iPhone : Réglages → Accessibilité → Contenu énoncé →
+Voix → Arabe).
 
 ---
 
-## Le fichier
+## Le code
 
 ```
 src/index.html   coquille
 src/styles.css   styles
-src/data.js      tout le contenu — c'est là qu'on ajoute des phrases
-src/app.js       révisions, audio, enregistrement
-build.js         assemble le tout dans dist/dar-darija.html
+src/data.js      les 242 phrases, le guide, le parcours
+src/blocks.js    les mots, les verbes, les moules
+src/translit.js  le lexique de prononciation : 550 mots darija → lecture française
+build.js         assemble tout dans dist/dar-darija.html
 ```
 
-Ajouter une phrase : ouvre `src/data.js`, copie une fiche existante dans le bon thème, donne-lui un
-`id` unique, puis `node build.js`.
+Ajouter une phrase : copie une fiche existante dans le bon thème de `src/data.js`, donne-lui un `id`
+unique, puis `node build.js`. Si un mot n'est pas encore dans le lexique de prononciation, le build
+s'arrête et te dit lequel ajouter à `src/translit.js` — la ligne française ne peut donc jamais être
+oubliée.

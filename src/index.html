@@ -26,8 +26,8 @@
       <div class="today" id="todayCard"></div>
       <div class="tiles" id="tiles" style="margin-top:18px"></div>
       <hr class="sep">
-      <h2>Le vocal du soir</h2>
-      <p>Enregistre ces trois phrases et envoie-les a ton copain. C est le seul exercice qui compte vraiment : passer de je sais la dire a je l ai dite.</p>
+      <h2>Le monologue du soir</h2>
+      <p>Une minute, seule, a voix haute : raconte ta journee avec le peu que tu sais. Appuie sur <b>M ecouter</b> pour t enregistrer et te reecouter — c est en t entendant que tu corriges ton accent, sans avoir besoin de personne.</p>
       <div id="vocal" class="stack-sm"></div>
     </div>
   </section>
@@ -36,13 +36,18 @@
   <section class="view" id="v-themes" aria-label="Themes">
     <div class="wrap">
       <div id="themesIndex">
-        <p class="eyebrow">15 themes, 242 phrases</p>
+        <p class="eyebrow" id="themesCount">15 themes</p>
         <h1>Par situation</h1>
         <p>Les themes marques <b>essentiel</b> sont ceux qui changent une visite. Commence par eux.</p>
         <div class="theme-list" id="themeList" style="margin-top:18px"></div>
       </div>
       <div id="themeDetail" class="hidden"></div>
     </div>
+  </section>
+
+  <!-- BRIQUES -->
+  <section class="view" id="v-blocks" aria-label="Briques">
+    <div class="wrap" id="blocksRoot"></div>
   </section>
 
   <!-- REVISER -->
@@ -54,7 +59,7 @@
   <section class="view" id="v-guide" aria-label="Guide">
     <div class="wrap">
       <p class="eyebrow">La methode</p>
-      <h1>Huit regles, et rien d autre</h1>
+      <h1>Neuf regles, et rien d autre</h1>
       <p>Tu ne veux ni lire ni ecrire l arabe : tout ici est fait pour l oreille et la bouche.</p>
       <ol class="rules" id="rules" style="margin-top:14px"></ol>
 
@@ -62,6 +67,11 @@
       <h2>Les sons qui n existent pas en francais</h2>
       <p>Huit symboles a connaitre. Ils reviennent dans toutes les phrases de l app.</p>
       <div id="sounds" style="margin-top:8px"></div>
+
+      <hr class="sep">
+      <h2>Ou entendre du darija, toute seule</h2>
+      <p>Ton oreille a besoin de darija reel, pas seulement de fiches. Cinq minutes par jour, meme sans rien comprendre au debut.</p>
+      <ol class="rules" id="ecoute" style="margin-top:14px"></ol>
 
       <hr class="sep">
       <h2>Le parcours en huit semaines</h2>
@@ -72,8 +82,16 @@
       <h2>Reglages</h2>
       <div class="card stack">
         <div>
+          <h3>Comment ecrire les sons</h3>
+          <p class="muted" style="margin:2px 0 8px">La lecture francaise est faite pour ta bouche. L arabizi est ce que les Marocains ecrivent vraiment en SMS : tu finiras par le croiser.</p>
+          <div class="seg" role="tablist">
+            <button role="tab" data-script="fr" aria-selected="true">Lecture francaise<small>bnine bezzaf</small></button>
+            <button role="tab" data-script="arabizi" aria-selected="false">Arabizi<small>bnin bezzaf</small></button>
+          </div>
+        </div>
+        <div>
           <h3>Vitesse de la voix du telephone</h3>
-          <p class="muted" style="margin:2px 0 8px">La voix lit de l arabe classique : elle donne le squelette du mot, pas l accent marocain. Ta vraie reference reste la voix que tu enregistres.</p>
+          <p class="muted" style="margin:2px 0 8px">Elle lit de l arabe classique : elle donne le squelette du mot, pas l accent marocain. Ralentis-la, et fie-toi surtout a ce que tu entends dans les series et la radio.</p>
           <input type="range" id="rate" min="0.5" max="1" step="0.05" style="width:100%">
         </div>
         <div>
@@ -82,7 +100,7 @@
         </div>
         <button class="btn ghost" id="resetBtn">Tout remettre a zero</button>
       </div>
-      <p class="muted center" style="margin:22px 0 0">Tes revisions et les voix enregistrees restent dans ce telephone. Rien n est envoye ailleurs.</p>
+      <p class="muted center" style="margin:22px 0 0">Tes revisions et tes enregistrements restent dans ce telephone. Rien n est envoye ailleurs, et personne d autre ne voit ou tu en es.</p>
     </div>
   </section>
 </main>
@@ -93,6 +111,8 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Aujourd hui</button>
     <button class="tab" role="tab" aria-selected="false" data-go="themes">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="4" width="17" height="16" rx="2.5"/><path d="M8 4v16"/></svg>Themes</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="blocks">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3.5" width="8" height="8" rx="1.6"/><rect x="13" y="3.5" width="8" height="8" rx="1.6"/><rect x="3" y="13.5" width="8" height="7" rx="1.6"/><rect x="13" y="13.5" width="8" height="7" rx="1.6"/></svg>Briques</button>
     <button class="tab" role="tab" aria-selected="false" data-go="drill">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M5.5 8v8M18.5 8v8M2.5 11v2M21.5 11v2"/></svg><span id="dueDot" class="dot hidden"></span>Reviser</button>
     <button class="tab" role="tab" aria-selected="false" data-go="guide">

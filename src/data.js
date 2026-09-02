@@ -7,36 +7,45 @@
 
 const GUIDE = {
   sounds: [
-    { sym:"7", name:"le h souffle", how:"Un h expire du fond de la gorge, comme quand tu embues une vitre, mais plus serre. Ce n est PAS le h muet francais.", ex:"l7amdoullah (Dieu merci), s7ab (ami), 7lib (lait)" },
-    { sym:"kh", name:"la jota", how:"Le ch allemand de Bach, ou la jota espagnole. Comme si tu raclais doucement.", ex:"khoya (mon frere), lkhobz (le pain), sba7 lkhir (bonjour)" },
-    { sym:"gh", name:"le r francais", how:"Bonne nouvelle : c est exactement le r de Paris, grasseye. Tu l as deja.", ex:"lmaghrib (le Maroc), ghadi (je vais), ghali (cher)" },
-    { sym:"r", name:"le r roule", how:"Roule-le comme en espagnol ou en italien. Ne le prononce jamais a la francaise, sinon tu dis gh.", ex:"mer7ba (bienvenue), darija, bared (froid)" },
-    { sym:"3", name:"le son du fond", how:"Le plus dur. Serre la gorge comme si tu allais tousser, et fais un a. Personne ne t en voudra si tu le rates : dis un a bien ouvert.", ex:"3afak (s il te plait), 3likoum, 3ayyana (fatiguee)" },
-    { sym:"q", name:"le k profond", how:"Un k prononce tout au fond, la ou tu avales. Different du k normal.", ex:"qhwa (cafe), nqder (je peux), waqila (peut-etre)" },
-    { sym:"ou", name:"le ou", how:"Toujours le ou francais, jamais le u de tu. Le son u n existe pas en darija.", ex:"chokran, kouli (mange), lyoum (aujourd hui)" },
-    { sym:"e", name:"le e avale", how:"Un e tres court, comme dans le petit dit vite. Souvent on l entend a peine.", ex:"kanhder (je parle), sme7 liya (pardon)" }
+    { sym:"h", name:"le h souffle", how:"Un h expire du fond de la gorge, comme quand tu embues une vitre, mais plus serre. Il ne faut jamais l avaler : en darija, aucun h n est muet.", ex:"l-hammdou-llah (Dieu merci), merhba (bienvenue), l-hlib (le lait)" },
+    { sym:"kh", name:"la jota", how:"Le ch allemand de Bach, ou la jota espagnole. Comme si tu raclais doucement. Tu le connais deja par le mot khol.", ex:"khouya (mon frere), l-khobz (le pain), s-bah l-khir (bonjour)" },
+    { sym:"gh", name:"le r de Paris", how:"Bonne nouvelle : c est exactement le r grasseye du francais. Tu l as depuis toujours.", ex:"l-maghrib (le Maroc), ghadi (je vais), ghali (cher)" },
+    { sym:"r", name:"le r roule", how:"Roule-le comme en espagnol ou en italien. Si tu le prononces a la francaise, tu dis gh et tu changes le mot.", ex:"merhba (bienvenue), d-darija, bared (froid)" },
+    { sym:"â", name:"le son du fond", how:"Le plus dur, et le seul qui ne ressemble a rien de francais. Serre la gorge comme si tu allais tousser, puis fais un a. Si tu le rates, prononce un a bien ouvert : tout le monde comprendra.", ex:"âafak (s il te plait), âlikoum, âayyana (fatiguee)" },
+    { sym:"q", name:"le k profond", how:"Un k prononce tout au fond, la ou tu avales. Different du k normal, mais un k ordinaire passe tres bien.", ex:"l-qahoua (le cafe), nqder (je peux), ouaqila (peut-etre)" },
+    { sym:"ou", name:"le ou", how:"Toujours le ou francais, jamais le u de tu : le son u n existe pas en darija. C est pour ca qu on ecrit ouakha et pas wakha.", ex:"chokrane, kouli (mange), l-youm (aujourd hui)" },
+    { sym:"-", name:"le trait d union", how:"Il ne se prononce pas : il decoupe le mot pour toi et empeche ta bouche de fabriquer une nasale francaise. kann-bghi se lit kane puis bghi, en un seul souffle.", ex:"kann-bghi (j aime), l-khobz (le pain), t-tajine" },
+    { sym:"ine", name:"aucune nasale", how:"Le darija n a ni in, ni an, ni on a la francaise. On ecrit donc ine, ane, one, et on double parfois la consonne, pour t empecher de nasaliser.", ex:"bnine (delicieux), mezyane (bien), fine (ou)" }
   ],
   rules: [
-    { t:"Zero ecriture, zero grammaire", d:"Tu n apprends pas une langue, tu apprends des blocs entiers a sortir au bon moment. Ne cherche jamais pourquoi ca se dit comme ca." },
-    { t:"Toujours a voix haute", d:"Une phrase lue des yeux ne sort pas de ta bouche le jour J. Repete-la 3 fois a voix haute, meme dans le metro, meme en chuchotant." },
-    { t:"La voix de ton copain est ta reference", d:"Sur chaque fiche, le bouton micro enregistre sa voix. La voix du telephone lit de l arabe classique : c est une bequille, pas un modele. Fais-lui enregistrer un theme par semaine." },
-    { t:"Comprendre avant de parler", d:"En famille, 80 pour cent du temps tu ecoutes. Le theme Ce qu ils vont te dire vaut plus que tous les autres : travaille-le des la semaine 1." },
-    { t:"12 minutes par jour battent 2 heures le dimanche", d:"La memoire a besoin de repetitions espacees, pas de marathons. L app te ressort chaque phrase juste avant que tu l oublies." },
-    { t:"Le vocal quotidien", d:"Chaque soir, envoie un vocal de 20 secondes a ton copain avec les phrases du jour. C est la seule facon de passer de je sais dire a je dis." },
-    { t:"Cinq mots te sauvent partout", d:"bezzaf (beaucoup), chwiya (un peu), safi (ca suffit, c est bon), wakha (d accord), nchallah (si Dieu veut). Glisse-les partout, ca sonne immediatement local." },
+    { t:"Zero ecriture, zero grammaire", d:"Tu apprends des blocs a sortir au bon moment, et des moules a remplir. Jamais un systeme, jamais une regle pour la regle." },
+    { t:"Toujours a voix haute", d:"Une phrase lue des yeux ne sort pas de ta bouche le jour J. Repete chaque phrase trois fois a voix haute, meme en chuchotant dans le metro." },
+    { t:"Ne recite pas, fabrique", d:"Une phrase apprise par coeur te sert une fois. Un moule comme bghite ___ (je veux ___) te sert cinquante fois. Des que tu tiens un moule, change le mot dedans : c est ca, parler." },
+    { t:"Comprendre avant de parler", d:"En famille, tu ecouteras 80 pour cent du temps. Le theme Ce qu ils vont te dire vaut plus que tous les autres : travaille-le des la semaine 1." },
+    { t:"Ton oreille est le seul outil", d:"La voix du telephone lit de l arabe classique : elle donne le squelette du mot, pas l accent. Enregistre-toi avec le bouton Moi, reecoute-toi, recommence. C est en t entendant que tu corriges." },
+    { t:"12 minutes par jour battent 2 heures le dimanche", d:"La memoire a besoin de repetitions espacees, pas de marathons. L app te ressort chaque phrase juste avant le moment ou tu l aurais oubliee." },
+    { t:"Le monologue du soir", d:"Une minute, seule, a voix haute : raconte ta journee avec le peu que tu sais. ana âayyana. klite bezzaf. ghadi nnâes. C est pauvre, c est parfait, et c est la que la langue devient la tienne." },
+    { t:"Cinq mots te sauvent partout", d:"bezzaf (beaucoup), chouiya (un peu), safi (ca suffit, c est bon), ouakha (d accord), nchallah (si Dieu veut). Glisse-les partout : ca sonne immediatement local." },
     { t:"Vise 30 phrases, pas la perfection", d:"Sa famille ne va pas te noter. Dix phrases dites de travers avec le sourire valent mille fois une grammaire parfaite et un silence gene." }
+  ],
+  ecoute: [
+    { t:"Les series marocaines", d:"Cherche serie marocaine 2M ou sitcom marocain sur YouTube. C est le darija de tous les jours, avec le ton, les silences et les interruptions. Cinq minutes par jour suffisent, meme sans rien comprendre au debut." },
+    { t:"Les chaines de cuisine en darija", d:"Double benefice : tu vois ce dont on parle, et c est exactement le vocabulaire dont tu auras besoin dans sa cuisine." },
+    { t:"La radio marocaine en fond", d:"Hit Radio, Chada FM, MFM : mets-les en fond pendant que tu fais autre chose. Ton oreille apprend le rythme et la musique de la langue avant les mots." },
+    { t:"Les vlogs et les comptes marocains", d:"Sur TikTok ou Instagram, cherche darija ou maroc vlog. C est court, c est rapide, et c est de la langue vraie." },
+    { t:"Une chanson en boucle", d:"Choisis un morceau marocain qui te plait et ecoute-le vingt fois. Les paroles sont repetitives et elles se collent a la memoire sans effort." }
   ]
 };
 
 const PROGRAM = [
   { n:1, title:"Les sons, puis saluer", desc:"Le guide des sons, les 12 phrases de survie, saluer et prendre conge.", themes:["urgence","salamat"] },
-  { n:2, title:"Se presenter, remercier", desc:"Dire qui tu es, et les formules de politesse qui reviennent 50 fois par jour.", themes:["premiere","politesse"] },
-  { n:3, title:"A table, premiere moitie", desc:"Le vrai terrain de jeu. Compliment sur la cuisine, refuser de se resservir.", themes:["table","ecoute"] },
-  { n:4, title:"Comprendre et se debloquer", desc:"Ce qu ils te disent, et comment demander de repeter sans bloquer la conversation.", themes:["ecoute","comprendre"] },
-  { n:5, title:"Papoter, la famille", desc:"Les questions faciles a poser, et comment appeler chaque personne.", themes:["smalltalk","famille"] },
-  { n:6, title:"Chez eux, et le coeur", desc:"S installer, aider, complimenter, dire ce que tu ressens.", themes:["maison","sentiments"] },
-  { n:7, title:"Dehors et au telephone", desc:"Taxi, souk, chiffres et prix. Puis les appels avec sa mere.", themes:["dehors","telephone"] },
-  { n:8, title:"Les grandes occasions", desc:"Fetes, mariage, naissance, condoleances. Et la revision generale.", themes:["occasions","amour"] }
+  { n:2, title:"Se presenter, et les mots de base", desc:"Dire qui tu es, les formules de politesse, et tes premieres familles de mots.", themes:["premiere","politesse","mots"] },
+  { n:3, title:"A table", desc:"Le vrai terrain de jeu : complimenter la cuisine, refuser un quatrieme service.", themes:["table","ecoute"] },
+  { n:4, title:"Comprendre, et les verbes", desc:"Ce qu ils te disent, comment demander de repeter, et les verbes qui servent tous les jours.", themes:["ecoute","comprendre","verbes"] },
+  { n:5, title:"Papoter, la famille", desc:"Les questions faciles a poser, comment appeler chacun, et plus de vocabulaire.", themes:["smalltalk","famille","mots"] },
+  { n:6, title:"Fabriquer tes phrases", desc:"Les moules a trous : le moment ou tu arretes de reciter et ou tu commences a parler.", themes:["moules","maison","sentiments"] },
+  { n:7, title:"Dehors et au telephone", desc:"Taxi, souk, chiffres et prix, puis les appels. Et toujours des moules.", themes:["dehors","telephone","moules"] },
+  { n:8, title:"Les grandes occasions", desc:"Fetes, mariage, naissance, condoleances. Puis la revision generale.", themes:["occasions","amour","verbes"] }
 ];
 
 const THEMES = [
@@ -61,12 +70,12 @@ const THEMES = [
   id:"salamat", name:"Saluer et partir", desc:"Arriver, embrasser tout le monde, et repartir proprement.",
   items:[
     { id:"s1", fr:"Bonjour a tous", phon:"salam 3likoum", ar:"السلام عليكم" },
-    { id:"s2", fr:"Et a toi le salut (la reponse)", phon:"wa 3likoum salam", ar:"وعليكم السلام", note:"Quand quelqu un entre et dit salam 3likoum, c est ta reponse automatique." },
+    { id:"s2", fr:"Et a toi le salut (la reponse)", phon:"wa 3likoum salam", ar:"وعليكم السلام", note:"Quand quelqu un entre et dit <b>salam 3likoum</b>, c est ta reponse automatique." },
     { id:"s3", fr:"Bonjour (le matin)", phon:"sba7 lkhir", ar:"صباح الخير", note:"Reponse : <b>sba7 nnour</b> (matin de lumiere)." },
     { id:"s4", fr:"Bonsoir", phon:"msa lkhir", ar:"مسا الخير", note:"Reponse : <b>msa nnour</b>." },
     { id:"s5", fr:"Comment tu vas ?", phon:"kif dayer ?", ar:"كيف داير؟", alt:{ l:"a une femme", phon:"kif dayra ?", ar:"كيف دايرة؟" }, note:"A sa mere, c est donc <b>kif dayra</b>. Retiens la version femme en premier." },
     { id:"s6", fr:"Ca va ? (le plus simple)", phon:"labas ?", ar:"لاباس؟", note:"Marche pour homme, femme, groupe. Si tu ne dois en retenir qu une, c est celle-la." },
-    { id:"s7", fr:"Ca va bien, Dieu merci", phon:"labas, l7amdoullah", ar:"لاباس الحمد لله", note:"On repond presque toujours l7amdoullah, meme quand ca ne va pas." },
+    { id:"s7", fr:"Ca va bien, Dieu merci", phon:"labas, l7amdoullah", ar:"لاباس الحمد لله", note:"On repond presque toujours <b>l7amdoullah</b>, meme quand ca ne va pas." },
     { id:"s8", fr:"Et toi ?", phon:"w nta ?", ar:"ونتا؟", alt:{ l:"a une femme", phon:"w nti ?", ar:"ونتي؟" } },
     { id:"s9", fr:"Bienvenue !", phon:"mer7ba", ar:"مرحبا", note:"On te le dira 20 fois en arrivant. Reponds <b>chokran, Allah ybarek fik</b>." },
     { id:"s10", fr:"Comment va la maisonnee ?", phon:"kif dayrin f ddar ?", ar:"كيف دايرين فالدار؟", note:"On demande des nouvelles de toute la famille avant de parler de quoi que ce soit. Ne saute jamais cette etape." },
@@ -131,7 +140,7 @@ const THEMES = [
     { id:"t4", fr:"Que Dieu benisse tes mains", phon:"Allah ybarek f yeddik", ar:"الله يبارك في يديك", note:"LE compliment a la personne qui a cuisine. Dis-le en la regardant. C est celui qui compte." },
     { id:"t5", fr:"Tu cuisines vraiment bien", phon:"katTayybi mezyan bezzaf", ar:"كتطيبي مزيان بزاف", alt:{ l:"a un homme", phon:"katTayyeb mezyan bezzaf", ar:"كتطيب مزيان بزاف" } },
     { id:"t6", fr:"J ai assez mange", phon:"chb3et", ar:"شبعت" },
-    { id:"t7", fr:"Vraiment, je n en peux plus", phon:"chb3et bezzaf, Allah ykhllik", ar:"شبعت بزاف، الله يخليك", note:"La deuxieme ligne de defense quand on te resert malgre chb3et." },
+    { id:"t7", fr:"Vraiment, je n en peux plus", phon:"chb3et bezzaf, Allah ykhllik", ar:"شبعت بزاف، الله يخليك", note:"La deuxieme ligne de defense quand on te resert malgre <b>chb3et</b>." },
     { id:"t8", fr:"C etait beaucoup, merci", phon:"kan bezzaf, barakallahou fik", ar:"كان بزاف، بارك الله فيك" },
     { id:"t9", fr:"Encore un tout petit peu alors", phon:"chwiya sghira barka", ar:"شوية صغيرة بركا", note:"La sortie diplomatique : accepter une micro-portion vaut mieux qu un refus net. Refuser trop fermement peut vexer." },
     { id:"t10", fr:"Je ne mange pas de viande", phon:"ma kanakoulch lle7em", ar:"ما كناكلش اللحم" },
@@ -195,7 +204,7 @@ const THEMES = [
     { id:"c11", fr:"Demande a Youssef, il va t expliquer", phon:"sewwel Youssef, ghadi ychre7 lik", ar:"سول يوسف، غادي يشرح ليك" },
     { id:"c12", fr:"Je vais apprendre, promis", phon:"ghadi nt3allem, nchallah", ar:"غادي نتعلم، إن شاء الله" },
     { id:"c13", fr:"Un peu seulement", phon:"ghir chwiya", ar:"غير شوية" },
-    { id:"c14", fr:"C est difficile mais j aime ca", phon:"s3ib, wllakin kayjebni", ar:"صعيب، ولكن كيعجبني" }
+    { id:"c14", fr:"C est difficile mais j aime ca", phon:"s3ib, wllakin kay3jebni", ar:"صعيب، ولكن كيعجبني" }
   ]
 },
 {
@@ -204,7 +213,7 @@ const THEMES = [
     { id:"k1", fr:"Comment va ta sante ?", phon:"kif ss77a ?", ar:"كيف الصحة؟", note:"On demande la sante avant tout le reste, surtout aux personnes agees." },
     { id:"k2", fr:"Comment va la famille ?", phon:"labas 3la l3a2ila ?", ar:"لاباس على العائلة؟" },
     { id:"k3", fr:"Quoi de neuf ?", phon:"chnou lakhbar ?", ar:"شنو الأخبار؟" },
-    { id:"k4", fr:"Tu as mange ?", phon:"klliti ?", ar:"كليتي؟", note:"Question d affection, pas de logistique. On te la posera tout le temps." },
+    { id:"k4", fr:"Tu as mange ?", phon:"kliti ?", ar:"كليتي؟", note:"Question d affection, pas de logistique. On te la posera tout le temps." },
     { id:"k5", fr:"Il fait chaud aujourd hui", phon:"lyoum skhoun", ar:"اليوم سخون" },
     { id:"k6", fr:"Il fait froid ce soir", phon:"had llil bared", ar:"هاد الليل بارد" },
     { id:"k7", fr:"Le Maroc est magnifique", phon:"lmaghrib zwin bezzaf", ar:"المغرب زوين بزاف" },
@@ -213,7 +222,7 @@ const THEMES = [
     { id:"k10", fr:"Tu as des enfants ?", phon:"3endek drari ?", ar:"عندك دراري؟" },
     { id:"k11", fr:"Quel age il a ?", phon:"ch7al f 3emrou ?", ar:"شحال فعمرو؟", alt:{ l:"pour une fille", phon:"ch7al f 3emrha ?", ar:"شحال فعمرها؟" } },
     { id:"k12", fr:"Il est mignon, que Dieu le benisse", phon:"zwin, tbarkallah 3lih", ar:"زوين، تبارك الله عليه", note:"N oublie JAMAIS le tbarkallah quand tu complimentes un enfant." },
-    { id:"k13", fr:"Je suis fatiguee", phon:"ana 3ayyana", ar:"أنا عيانة", note:"Au feminin. Un homme dit 3ayyan." },
+    { id:"k13", fr:"Je suis fatiguee", phon:"ana 3ayyana", ar:"أنا عيانة", note:"Au feminin. Un homme dit <b>3ayyan</b>." },
     { id:"k14", fr:"J ai sommeil", phon:"jani nn3as", ar:"جاني النعاس" },
     { id:"k15", fr:"Qu est-ce qu on fait aujourd hui ?", phon:"chnou ghadi ndirou lyoum ?", ar:"شنو غادي نديرو اليوم؟" },
     { id:"k16", fr:"Je peux prendre une photo ?", phon:"nqder nakhod tsswira ?", ar:"نقدر ناخد تصويرة؟", note:"Toujours demander, surtout aux personnes agees et au souk." },
@@ -276,7 +285,7 @@ const THEMES = [
     { id:"n10", fr:"Ca me touche beaucoup", phon:"kaythez fiya bezzaf", ar:"كيتهز فيا بزاف" },
     { id:"n11", fr:"Je suis triste de partir", phon:"ana mqellqa 7it ghadi nemchi", ar:"أنا مقلقة حيت غادي نمشي" },
     { id:"n12", fr:"Je reviens vite, si Dieu veut", phon:"ghadi nrje3 daghya, nchallah", ar:"غادي نرجع دغيا، إن شاء الله" },
-    { id:"n13", fr:"Je n oublierai jamais", phon:"3emmerni gha nnsa", ar:"عمرني غا ننسى" },
+    { id:"n13", fr:"Je n oublierai jamais", phon:"3emmerni ma nensa", ar:"عمرني ما ننسى" },
     { id:"n14", fr:"Vous m avez trop gatee", phon:"3ziztou 3liya bezzaf", ar:"عزيزتو عليا بزاف" }
   ]
 },
@@ -302,7 +311,7 @@ const THEMES = [
   items:[
     { id:"d1", fr:"Un, deux, trois", phon:"wa7ed, jouj, tlata", ar:"واحد، جوج، تلاتة" },
     { id:"d2", fr:"Quatre, cinq, six", phon:"reb3a, khamsa, setta", ar:"ربعة، خمسة، ستة" },
-    { id:"d3", fr:"Sept, huit, neuf, dix", phon:"seb3a, tmnya, tes3oud, 3achra", ar:"سبعة، تمنية، تسعود، عشرة" },
+    { id:"d3", fr:"Sept, huit, neuf, dix", phon:"seb3a, tmnya, tes3a, 3achra", ar:"سبعة، تمنية، تسعة، عشرة" },
     { id:"d4", fr:"Vingt, cinquante, cent", phon:"3achrin, khamsin, mya", ar:"عشرين، خمسين، مية" },
     { id:"d5", fr:"Combien ca coute ?", phon:"b ch7al ?", ar:"بشحال؟" },
     { id:"d6", fr:"Attention : le prix en riyals", phon:"chnou b ddirham ?", ar:"شنو بالدرهم؟", note:"<b>Le piege</b> : au souk on annonce souvent les prix en riyals. 1 dirham = 20 riyals. Si on te dit deux mille, c est 100 dirhams. Demande toujours le prix <b>b ddirham</b>." },
@@ -319,7 +328,7 @@ const THEMES = [
     { id:"d17", fr:"Aidez-moi s il vous plait", phon:"3awnouni 3afak", ar:"عاونوني عافاك" },
     { id:"d18", fr:"L addition, s il vous plait", phon:"l7sab 3afak", ar:"الحساب عافاك" },
     { id:"d19", fr:"Je cherche la pharmacie", phon:"kanqelleb 3la ffarmasyan", ar:"كنقلب على الفارماسيان" },
-    { id:"d20", fr:"J attends mon copain ici", phon:"katsenna s7abi hna", ar:"كنتسنى صاحبي هنا", note:"Utile pour couper court quand on t aborde dans la rue." }
+    { id:"d20", fr:"J attends mon copain ici", phon:"kantsenna s7abi hna", ar:"كنتسنى صاحبي هنا", note:"Utile pour couper court quand on t aborde dans la rue." }
   ]
 },
 {

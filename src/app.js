@@ -5,7 +5,14 @@
 /* ---------------------------------------------------------------- etat */
 const KEY = "dardarija.v1";
 const DAY = 864e5;
-const ALL = THEMES.flatMap(t => t.items.map(i => Object.assign({theme:t.id}, i)));
+const ALL = [];
+THEMES.forEach(t => t.items.forEach(i => ALL.push(Object.assign({theme:t.id}, i))));
+MOTS.forEach(c => c.items.forEach(i => ALL.push(Object.assign({theme:"mots", sub:c.cat}, i))));
+VERBES.forEach(v => v.forms.forEach((f,k) => ALL.push(
+  { id:v.id+"f"+k, theme:"verbes", sub:v.fr, fr:f.l, phon:f.phon, fp:f.fp, ar:f.ar })));
+MOULES.forEach(m => m.ex.forEach((e,k) => ALL.push(
+  { id:m.id+"e"+k, theme:"moules", sub:m.fr, fr:e.fr, phon:e.phon, fp:e.fp, ar:e.ar })));
+const VIRTUELS = { mots:"Les mots", verbes:"Les verbes", moules:"Les moules" };
 const BY_ID = new Map(ALL.map(i => [i.id, i]));
 const INTERVALS = [0, 1, 2, 5, 12, 30];   /* jours, par boite Leitner */
 
@@ -13,7 +20,7 @@ const S = load();
 function load(){
   let s = null;
   try { s = JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e){}
-  return Object.assign({ srs:{}, lastDay:null, streak:0, sessions:0, rate:0.8, theme:"auto" }, s || {});
+  return Object.assign({ srs:{}, lastDay:null, streak:0, sessions:0, rate:0.8, theme:"auto", script:"fr" }, s || {});
 }
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
 const dayKey = d => new Date(d||Date.now()).toISOString().slice(0,10);
@@ -165,6 +172,11 @@ function stopRecord(){ try { recorder && recorder.stop(); } catch(e){ recorder =
 /* ------------------------------------------------------------- rendus */
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[<>&]/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
+/* graphie : lecture francaise par defaut, arabizi en second (c est ce qui s ecrit en SMS) */
+const line  = i => S.script === "fr" ? (i.fp || i.phon) : i.phon;
+const other = i => S.script === "fr" ? i.phon : (i.fp || i.phon);
+const otherLabel = () => S.script === "fr" ? "aussi ecrit" : "se lit";
+const note  = i => (S.script === "fr" ? (i.noteFp || i.note) : i.note) || "";
 const ICON = {
   play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.2v13.6L19 12z"/></svg>',
   mic :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="9" y="2.6" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.4"/></svg>',
@@ -177,15 +189,16 @@ function phraseCard(item){
   const hasRec = Rec.have.has(item.id);
   return '<article class="phrase' + (mastered ? " mastered" : "") + '" data-id="' + item.id + '">'
     + '<div class="fr">' + esc(item.fr) + (mastered ? " " + ICON.star : "") + '</div>'
-    + '<p class="phon">' + esc(item.phon) + '</p>'
-    + (item.alt ? '<div class="alt"><b>' + esc(item.alt.l) + '</b> &middot; ' + esc(item.alt.phon) + '</div>' : "")
+    + '<p class="phon">' + esc(line(item)) + '</p>'
+    + '<div class="alt2">' + otherLabel() + ' <span>' + esc(other(item)) + '</span></div>'
+    + (item.alt ? '<div class="alt"><b>' + esc(item.alt.l) + '</b> &middot; ' + esc(line(item.alt)) + '</div>' : "")
     + '<div class="ar" aria-hidden="true">' + esc(item.ar) + '</div>'
-    + (item.note ? '<div class="note">' + item.note + '</div>' : "")
+    + (item.note ? '<div class="note">' + note(item) + '</div>' : "")
     + '<div class="controls">'
       + '<button class="chip play" data-act="play">' + ICON.play + ' Ecouter</button>'
-      + '<button class="chip rec' + (hasRec ? " has" : "") + '" data-act="ref">' + ICON.mic + (hasRec ? " Sa voix, enregistree" : " Enregistrer sa voix") + '</button>'
-      + '<button class="chip" data-act="me">' + ICON.mic + ' Moi</button>'
-      + (hasRec ? '<button class="chip" data-act="del" aria-label="Supprimer la voix enregistree">&times;</button>' : "")
+      + '<button class="chip" data-act="me">' + ICON.mic + ' M ecouter</button>'
+      + '<button class="chip rec' + (hasRec ? " has" : "") + '" data-act="ref">' + ICON.mic + (hasRec ? " Ma version gardee" : " Garder ma version") + '</button>'
+      + (hasRec ? '<button class="chip" data-act="del" aria-label="Supprimer ma version">&times;</button>' : "")
     + '</div></article>';
 }
 
@@ -216,7 +229,11 @@ function refreshCard(card, id){
 function paintToday(){
   const p = weekPlan(), due = dueItems().length;
   const news = freshFor(p.themes, 5);
-  const t1 = THEMES.find(t => t.id === p.themes[0]);
+  const first = p.themes[0], virt = VIRTUELS[first];
+  const t1 = virt || (THEMES.find(t => t.id === first) || {}).name || "";
+  const openBtn = virt
+    ? '<button class="btn ghost" data-go2="blocks">Ouvrir les briques</button>'
+    : '<button class="btn ghost" data-open="' + esc(first) + '">Ouvrir le theme</button>';
   $("#todayCard").innerHTML =
       '<div class="today-head">'
     +   '<span class="wk">Semaine ' + p.n + ' sur 8</span>'
@@ -226,20 +243,20 @@ function paintToday(){
     + '<ul class="steps">'
     +   '<li><span class="n">1</span><span><span class="t">Reviser ' + (due || "0") + ' phrase' + (due>1?"s":"") + '</span>'
     +     '<span class="d">' + (due ? "Elles sont sur le point de sortir de ta memoire. Cinq minutes." : "Rien a reviser pour l instant. Passe a l etape 2.") + '</span>'
-    +     '<span class="btn-row" style="margin-top:9px"><button class="btn" data-go2="drill"' + (due?"":" disabled") + '>Reviser</button></span></span></li>'
-    +   '<li><span class="n">2</span><span><span class="t">Apprendre 5 phrases : ' + esc(t1 ? t1.name : "") + '</span>'
+    +     '<span class="btn-row"><button class="btn" data-go2="drill"' + (due?"":" disabled") + '>Reviser</button></span></span></li>'
+    +   '<li><span class="n">2</span><span><span class="t">Apprendre 5 nouvelles choses : ' + esc(t1) + '</span>'
     +     '<span class="d">Ecoute, puis repete a voix haute trois fois. Pas dans ta tete : a voix haute.</span>'
-    +     '<span class="btn-row" style="margin-top:9px"><button class="btn ghost" data-open="' + esc(p.themes[0]) + '">Ouvrir le theme</button></span></span></li>'
-    +   '<li><span class="n">3</span><span><span class="t">Envoyer le vocal du soir</span>'
-    +     '<span class="d">Les trois phrases ci-dessous, en vocal, a ton copain. Vingt secondes.</span></span></li>'
+    +     '<span class="btn-row">' + openBtn + '</span></span></li>'
+    +   '<li><span class="n">3</span><span><span class="t">Le monologue du soir</span>'
+    +     '<span class="d">Une minute, seule, a voix haute. Les trois phrases ci-dessous sont ta matiere premiere.</span></span></li>'
     + '</ul>';
 
-  const vocal = (news.length ? news : ALL.filter(i => S.srs[i.id]).slice(0,3)).slice(0,3);
+  const vocal = (news.length ? news : shuffle(ALL.filter(i => S.srs[i.id])).slice(0,3)).slice(0,3);
   $("#vocal").innerHTML = vocal.map(phraseCard).join("");
 
   const done = ALL.filter(i => S.srs[i.id]).length;
   $("#tiles").innerHTML =
-      tile(done, "phrases vues")
+      tile(done, "vues")
     + tile(masteredCount(ALL), "acquises")
     + tile(S.sessions, "seances");
 }
@@ -258,11 +275,13 @@ function paintThemes(){
   }).join("");
 }
 function openTheme(id){
+  if (VIRTUELS[id]){ btab = id; go("blocks"); return; }
   const t = THEMES.find(x => x.id === id); if (!t) return;
   go("themes");
   $("#themesIndex").classList.add("hidden");
   const d = $("#themeDetail");
   d.classList.remove("hidden");
+  d.dataset.theme = t.id;
   d.innerHTML = '<button class="btn quiet" data-back="1" style="margin-bottom:16px">&larr; Tous les themes</button>'
     + '<p class="eyebrow">' + t.items.length + ' phrases</p>'
     + '<h1>' + esc(t.name) + '</h1><p>' + esc(t.desc) + '</p>'
@@ -276,6 +295,52 @@ function closeTheme(){
   paintThemes();
 }
 
+/* ------------------------------------------------------------- briques */
+let btab = "mots";
+function rowLine(i){
+  return '<button class="row" data-id="' + i.id + '" data-act="play">'
+    + '<span class="rfr">' + esc(i.fr) + '</span>'
+    + '<span class="rph">' + esc(line(i)) + '</span>'
+    + '<span class="rplay">' + ICON.play + '</span></button>';
+}
+function paintBlocks(){
+  const seg = '<div class="seg" role="tablist">'
+    + ["mots","verbes","moules"].map(k =>
+        '<button role="tab" aria-selected="' + (btab===k) + '" data-btab="' + k + '">'
+        + (k === "mots" ? "Mots" : k === "verbes" ? "Verbes" : "Moules") + '</button>').join("")
+    + '</div>';
+  let body = "";
+  if (btab === "mots"){
+    body = '<p class="eyebrow">' + ALL.filter(i=>i.theme==="mots").length + ' mots</p>'
+      + '<h1>Les mots</h1><p>Le stock dans lequel tu piocheras pour remplir les moules. Touche une ligne pour l entendre.</p>'
+      + '<button class="btn block" style="margin:14px 0 22px" data-drill="mots">S entrainer sur les mots</button>'
+      + MOTS.map(c => '<h3 class="grp">' + esc(c.cat) + '</h3><div class="rows">'
+          + c.items.map(i => rowLine(Object.assign({}, i, {fp:i.fp}))).join("") + '</div>'
+          + (c.items.filter(i=>i.note).map(i =>
+              '<div class="note"><b>' + esc(line(i)) + '</b> &middot; ' + note(i) + '</div>').join(""))).join("");
+  }
+  if (btab === "verbes"){
+    body = '<p class="eyebrow">' + VERBES.length + ' verbes, ' + ALL.filter(i=>i.theme==="verbes").length + ' formes</p>'
+      + '<h1>Les verbes</h1><p>Seulement les formes dont tu te serviras vraiment : je, tu a une femme, le passe, le futur, l ordre.</p>'
+      + '<button class="btn block" style="margin:14px 0 22px" data-drill="verbes">S entrainer sur les verbes</button>'
+      + VERBES.map((v,vi) => '<article class="card" style="margin-bottom:12px"><h3 class="vtitle">' + esc(v.fr) + '</h3>'
+          + (v.note ? '<div class="note" style="margin:0 0 10px">' + note(v) + '</div>' : "")
+          + '<div class="rows">' + v.forms.map((f,k) =>
+              rowLine({ id:v.id+"f"+k, fr:f.l, phon:f.phon, fp:f.fp })).join("") + '</div></article>').join("");
+  }
+  if (btab === "moules"){
+    body = '<p class="eyebrow">' + MOULES.length + ' moules</p>'
+      + '<h1>Les moules</h1><p>La seule facon d arreter de reciter. Tu gardes la structure, tu changes le mot dedans.</p>'
+      + '<button class="btn block" style="margin:14px 0 22px" data-drill="moules">S entrainer sur les moules</button>'
+      + MOULES.map(m => '<article class="moule"><div class="mfr">' + esc(m.fr) + '</div>'
+          + '<p class="phon mphon">' + esc(line(m)) + '</p>'
+          + (m.note ? '<div class="note">' + note(m) + '</div>' : "")
+          + '<div class="rows">' + m.ex.map((e,k) =>
+              rowLine({ id:m.id+"e"+k, fr:e.fr, phon:e.phon, fp:e.fp })).join("") + '</div></article>').join("");
+  }
+  $("#blocksRoot").innerHTML = seg + body;
+}
+
 /* -------------------------------------------------------------- drills */
 let Q = [], qi = 0, qn = 0, shown = false;
 function startDrill(themeId){
@@ -283,8 +348,7 @@ function startDrill(themeId){
   const plan = weekPlan();
   let list;
   if (themeId){
-    const t = THEMES.find(x => x.id === themeId);
-    list = t.items.map(i => Object.assign({theme:t.id}, i));
+    list = shuffle(ALL.filter(i => i.theme === themeId)).slice(0, 24);
   } else {
     list = shuffle(due).slice(0, 18).concat(freshFor(plan.themes, due.length < 6 ? 5 : 3));
   }
@@ -329,9 +393,10 @@ function paintDrill(){
       + (shown
           ? '<div class="reveal">'
             + (listen ? '<div class="fr" style="margin-bottom:8px">' + esc(item.fr) + '</div>' : "")
-            + '<p class="phon">' + esc(item.phon) + '</p>'
-            + (item.alt ? '<div class="alt"><b>' + esc(item.alt.l) + '</b> &middot; ' + esc(item.alt.phon) + '</div>' : "")
-            + (item.note ? '<div class="note" style="text-align:left">' + item.note + '</div>' : "")
+            + '<p class="phon">' + esc(line(item)) + '</p>'
+            + '<div class="alt2">' + otherLabel() + ' <span>' + esc(other(item)) + '</span></div>'
+            + (item.alt ? '<div class="alt"><b>' + esc(item.alt.l) + '</b> &middot; ' + esc(line(item.alt)) + '</div>' : "")
+            + (item.note ? '<div class="note" style="text-align:left">' + note(item) + '</div>' : "")
             + '<div class="controls" style="justify-content:center">'
               + '<button class="chip play" data-act="play">' + ICON.play + ' Ecouter</button>'
               + '<button class="chip" data-act="me">' + ICON.mic + ' Moi</button></div>'
@@ -368,6 +433,10 @@ function paintGuide(){
   $("#sounds").innerHTML = GUIDE.sounds.map(s =>
     '<div class="sound"><div class="sym">' + esc(s.sym) + '</div><div><h3>' + esc(s.name) + '</h3>'
     + '<div class="how">' + esc(s.how) + '</div><div class="ex">' + esc(s.ex) + '</div></div></div>').join("");
+  $("#ecoute").innerHTML = GUIDE.ecoute.map(r =>
+    '<li><span><b>' + esc(r.t) + '</b><span>' + esc(r.d) + '</span></span></li>').join("");
+  document.querySelectorAll("[data-script]").forEach(b =>
+    b.setAttribute("aria-selected", String(b.dataset.script === S.script)));
   const w = week();
   $("#weeks").innerHTML = PROGRAM.map(p =>
     '<div class="week' + (p.n === w ? " now" : "") + '"><div class="no">SEM ' + p.n + '</div>'
@@ -389,6 +458,7 @@ function go(view){
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.go === view)));
   if (view === "today") paintToday();
   if (view === "themes"){ if ($("#themeDetail").classList.contains("hidden")) paintThemes(); }
+  if (view === "blocks") paintBlocks();
   if (view === "drill" && !Q.length) paintDrill();
   if (view === "guide") paintGuide();
   window.scrollTo(0,0);
@@ -400,9 +470,10 @@ function applyTheme(){
 
 /* ------------------------------------------------------------- events */
 document.addEventListener("click", e => {
-  const t = e.target.closest("[data-go],[data-go2],[data-open],[data-back],[data-drill],[data-reveal],[data-grade]");
+  const t = e.target.closest("[data-go],[data-go2],[data-open],[data-back],[data-drill],[data-reveal],[data-grade],[data-btab]");
   if (!t) return;
-  if (t.dataset.go) go(t.dataset.go);
+  if (t.dataset.btab){ btab = t.dataset.btab; paintBlocks(); window.scrollTo(0,0); }
+  else if (t.dataset.go) go(t.dataset.go);
   else if (t.dataset.go2) go(t.dataset.go2);
   else if (t.dataset.open !== undefined && t.hasAttribute("data-open")) openTheme(t.dataset.open);
   else if (t.dataset.back) closeTheme();
@@ -415,6 +486,12 @@ $("#themeBtn").addEventListener("click", () => {
   save(); applyTheme();
 });
 $("#rate").addEventListener("input", e => { S.rate = Number(e.target.value); save(); });
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-script]"); if (!b) return;
+  S.script = b.dataset.script; save(); paintGuide(); paintToday();
+  if ($("#v-blocks").classList.contains("on")) paintBlocks();
+  if (!$("#themeDetail").classList.contains("hidden")) openTheme($("#themeDetail").dataset.theme);
+});
 $("#resetBtn").addEventListener("click", () => {
   if (!confirm("Effacer ta progression et les voix enregistrees ? C est definitif.")) return;
   Object.keys(S.srs).forEach(k => delete S.srs[k]);
