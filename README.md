@@ -77,6 +77,15 @@ L'app te fait réviser en **répétitions espacées** (5 boîtes) et alterne deu
 (tu entends, tu devines) tant que la phrase est fraîche, puis *Parler* (tu vois le français, tu dois
 la sortir de ta bouche). Parcours en 8 semaines, six séances par semaine, 12 minutes par séance.
 
+**Suivre son évolution.** L'onglet *Progrès* montre les jours de darija (calendrier sur 16 semaines), les
+fiches passées par jour, la boîte où en est chaque phrase, l'avancement par thème, les badges débloqués
+et le parcours en huit semaines.
+
+**Un mot de Zagora.** Chaque jour, un message de la famille de Soufyan rappelle ce qu'on gagne à parler
+darija chez eux. Dans *Réglages*, un rappel quotidien peut être activé (notification à l'heure choisie,
+tant que l'app est ouverte) ; le bouton *Ajouter au calendrier* génère un fichier `.ics` avec sept
+rappels hebdomadaires — c'est le rappel fiable, il sonne même app fermée.
+
 ⚠️ La voix du téléphone lit de l'**arabe classique** : elle donne le squelette du mot, pas l'accent
 marocain. Et si aucune voix arabe n'est installée sur l'appareil, le bouton *Écouter* reste muet —
 l'app te le dit et t'indique où l'installer (iPhone : Réglages → Accessibilité → Contenu énoncé →

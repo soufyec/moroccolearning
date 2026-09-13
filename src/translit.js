@@ -27,7 +27,7 @@ const FR_LEX = {
 "7aja":"haja", "7asasiya":"hassassiya", "7echchemtini":"hechchemtini",
 "7echmana":"hechmana", "7it":"hite", "7na":"hna", "7yati":"hyati",
 
-"Allah":"Allah", "Chloe":"Chloé", "Youssef":"Youssef",
+"Allah":"Allah", "Chloe":"Chloé", "Soufyan":"Soufyan", "zagora":"zagora",
 "a7sen":"ahssen", "allo":"allô", "ana":"ana", "asfa":"assfa", "atay":"atay",
 "b3da":"bâda", "b7al":"bhal", "baba":"baba", "bach":"bach",
 "barakallahou":"baraka-llahou", "bared":"bared", "bariz":"bariz", "barka":"barka",
