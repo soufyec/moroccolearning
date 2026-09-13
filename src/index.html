@@ -1,3 +1,9 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Dar Darija">
+<meta name="theme-color" content="#F1F4F0">
 <title>Dar Darija</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,34 +17,48 @@
       Dar Darija
     </div>
     <div class="spacer"></div>
-    <div class="streak" id="streak" title="jours d affilee">0 jours</div>
-    <button class="iconbtn" id="themeBtn" aria-label="Changer le theme clair ou sombre">
+    <button class="streak" id="streak" data-go="progress" title="Jours d’affilée" aria-label="Voir ma progression">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c.6 3.6 3.5 5 3.5 9a3.5 3.5 0 0 1-7 0c0-1.4.6-2.4 1.2-3.2.3 1.2 1 1.8 1.8 1.8 0-2.4-2-3.6-2-6.6C10.7 3.2 11.3 2.8 12 2.5z" fill="currentColor"/><path d="M6.5 12.5C5.4 14 5 15.4 5 16.8A7 7 0 0 0 19 16.8c0-2-.8-3.6-1.9-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span id="streakN">0</span>
+    </button>
+    <button class="iconbtn" id="guideBtn" data-go="guide" aria-label="Guide et réglages">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 5.5A2 2 0 0 1 6 3.5h6v17H6a2 2 0 0 0-2 2z"/><path d="M20 5.5a2 2 0 0 0-2-2h-6v17h6a2 2 0 0 1 2 2z"/></svg>
+    </button>
+    <button class="iconbtn" id="themeBtn" aria-label="Changer le thème clair ou sombre">
       <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 13.5A8 8 0 1 1 10.5 4a6.5 6.5 0 0 0 9.5 9.5z"/></svg>
     </button>
   </div>
 </header>
 
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
 <main>
-  <!-- AUJOURD HUI -->
-  <section class="view on" id="v-today" aria-label="Aujourd hui">
+  <!-- AUJOURD’HUI -->
+  <section class="view on" id="v-today" aria-label="Aujourd’hui">
     <div class="wrap">
-      <p class="eyebrow">Ta seance du jour, 12 minutes</p>
+      <div class="hero" id="hero"></div>
+      <div class="mot" id="mot"></div>
+      <div class="tiles" id="tiles"></div>
       <div class="today" id="todayCard"></div>
-      <div class="tiles" id="tiles" style="margin-top:18px"></div>
       <hr class="sep">
       <h2>Le monologue du soir</h2>
-      <p>Une minute, seule, a voix haute : raconte ta journee avec le peu que tu sais. Appuie sur <b>M ecouter</b> pour t enregistrer et te reecouter — c est en t entendant que tu corriges ton accent, sans avoir besoin de personne.</p>
+      <p>Une minute, seule, à voix haute : raconte ta journée avec le peu que tu sais. Appuie sur <b>M’écouter</b> pour t’enregistrer et te réécouter — c’est en t’entendant que tu corriges ton accent, sans avoir besoin de personne.</p>
       <div id="vocal" class="stack-sm"></div>
     </div>
   </section>
 
-  <!-- THEMES -->
-  <section class="view" id="v-themes" aria-label="Themes">
+  <!-- RÉVISER -->
+  <section class="view" id="v-drill" aria-label="Réviser">
+    <div class="wrap" id="drillRoot"></div>
+  </section>
+
+  <!-- THÈMES -->
+  <section class="view" id="v-themes" aria-label="Thèmes">
     <div class="wrap">
       <div id="themesIndex">
-        <p class="eyebrow" id="themesCount">15 themes</p>
+        <p class="eyebrow" id="themesCount">15 thèmes</p>
         <h1>Par situation</h1>
-        <p>Les themes marques <b>essentiel</b> sont ceux qui changent une visite. Commence par eux.</p>
+        <p>Les thèmes marqués <b>essentiel</b> sont ceux qui changent une visite. Commence par eux.</p>
         <div class="theme-list" id="themeList" style="margin-top:18px"></div>
       </div>
       <div id="themeDetail" class="hidden"></div>
@@ -50,57 +70,78 @@
     <div class="wrap" id="blocksRoot"></div>
   </section>
 
-  <!-- REVISER -->
-  <section class="view" id="v-drill" aria-label="Reviser">
-    <div class="wrap" id="drillRoot"></div>
+  <!-- PROGRÈS -->
+  <section class="view" id="v-progress" aria-label="Progrès">
+    <div class="wrap" id="progressRoot"></div>
   </section>
 
-  <!-- GUIDE -->
+  <!-- GUIDE + RÉGLAGES -->
   <section class="view" id="v-guide" aria-label="Guide">
     <div class="wrap">
-      <p class="eyebrow">La methode</p>
-      <h1>Neuf regles, et rien d autre</h1>
-      <p>Tu ne veux ni lire ni ecrire l arabe : tout ici est fait pour l oreille et la bouche.</p>
-      <ol class="rules" id="rules" style="margin-top:14px"></ol>
+      <p class="eyebrow">Réglages</p>
+      <h1>Rappels et réglages</h1>
 
-      <hr class="sep">
-      <h2>Les sons qui n existent pas en francais</h2>
-      <p>Huit symboles a connaitre. Ils reviennent dans toutes les phrases de l app.</p>
-      <div id="sounds" style="margin-top:8px"></div>
-
-      <hr class="sep">
-      <h2>Ou entendre du darija, toute seule</h2>
-      <p>Ton oreille a besoin de darija reel, pas seulement de fiches. Cinq minutes par jour, meme sans rien comprendre au debut.</p>
-      <ol class="rules" id="ecoute" style="margin-top:14px"></ol>
-
-      <hr class="sep">
-      <h2>Le parcours en huit semaines</h2>
-      <p>Une semaine equivaut a six seances. Tu avances quand tu travailles, pas quand le calendrier avance.</p>
-      <div class="weeks" id="weeks" style="margin-top:10px"></div>
-
-      <hr class="sep">
-      <h2>Reglages</h2>
-      <div class="card stack">
+      <div class="card stack" id="notifCard">
         <div>
-          <h3>Comment ecrire les sons</h3>
-          <p class="muted" style="margin:2px 0 8px">La lecture francaise est faite pour ta bouche. L arabizi est ce que les Marocains ecrivent vraiment en SMS : tu finiras par le croiser.</p>
+          <div class="rowline">
+            <div>
+              <h3>Un mot de Zagora chaque jour</h3>
+              <p class="muted" style="margin:2px 0 0">Une notification à l’heure que tu choisis, avec une bonne raison de faire ta séance. Sa mère y est pour quelque chose.</p>
+            </div>
+            <label class="switch"><input type="checkbox" id="notifOn"><span></span></label>
+          </div>
+          <div class="rowline" style="margin-top:12px">
+            <label for="notifTime" class="lbl">À quelle heure ?</label>
+            <input type="time" id="notifTime" value="19:00">
+          </div>
+          <p class="muted" id="notifInfo" style="margin:10px 0 0"></p>
+          <div class="btn-row" style="margin-top:12px">
+            <button class="btn ghost sm" id="notifTest">Tester maintenant</button>
+            <button class="btn ghost sm" id="icsBtn">Ajouter au calendrier</button>
+          </div>
+          <p class="muted" style="margin:10px 0 0">Le calendrier est le rappel le plus fiable : il sonne même quand l’app est fermée, avec un message différent chaque jour de la semaine.</p>
+        </div>
+      </div>
+
+      <div class="card stack" style="margin-top:12px">
+        <div>
+          <h3>Comment écrire les sons</h3>
+          <p class="muted" style="margin:2px 0 8px">La lecture française est faite pour ta bouche. L’arabizi est ce que les Marocains écrivent vraiment en SMS : tu finiras par le croiser.</p>
           <div class="seg" role="tablist">
-            <button role="tab" data-script="fr" aria-selected="true">Lecture francaise<small>bnine bezzaf</small></button>
+            <button role="tab" data-script="fr" aria-selected="true">Lecture française<small>bnine bezzaf</small></button>
             <button role="tab" data-script="arabizi" aria-selected="false">Arabizi<small>bnin bezzaf</small></button>
           </div>
         </div>
         <div>
-          <h3>Vitesse de la voix du telephone</h3>
-          <p class="muted" style="margin:2px 0 8px">Elle lit de l arabe classique : elle donne le squelette du mot, pas l accent marocain. Ralentis-la, et fie-toi surtout a ce que tu entends dans les series et la radio.</p>
+          <h3>Vitesse de la voix du téléphone</h3>
+          <p class="muted" style="margin:2px 0 8px">Elle lit de l’arabe classique : elle donne le squelette du mot, pas l’accent marocain. Ralentis-la, et fie-toi surtout à ce que tu entends dans les séries et la radio.</p>
           <input type="range" id="rate" min="0.5" max="1" step="0.05" style="width:100%">
         </div>
         <div>
           <h3>Voix disponible</h3>
-          <p class="muted" id="voiceInfo" style="margin:2px 0 0">Verification...</p>
+          <p class="muted" id="voiceInfo" style="margin:2px 0 0">Vérification…</p>
         </div>
-        <button class="btn ghost" id="resetBtn">Tout remettre a zero</button>
       </div>
-      <p class="muted center" style="margin:22px 0 0">Tes revisions et tes enregistrements restent dans ce telephone. Rien n est envoye ailleurs, et personne d autre ne voit ou tu en es.</p>
+
+      <hr class="sep">
+      <p class="eyebrow">La méthode</p>
+      <h1>Neuf règles, et rien d’autre</h1>
+      <p>Tu ne veux ni lire ni écrire l’arabe : tout ici est fait pour l’oreille et la bouche.</p>
+      <ol class="rules" id="rules" style="margin-top:14px"></ol>
+
+      <hr class="sep">
+      <h2>Les sons qui n’existent pas en français</h2>
+      <p>Neuf symboles à connaître. Ils reviennent dans toutes les phrases de l’app.</p>
+      <div id="sounds" style="margin-top:8px"></div>
+
+      <hr class="sep">
+      <h2>Où entendre du darija, toute seule</h2>
+      <p>Ton oreille a besoin de darija réel, pas seulement de fiches. Cinq minutes par jour, même sans rien comprendre au début.</p>
+      <ol class="rules" id="ecoute" style="margin-top:14px"></ol>
+
+      <hr class="sep">
+      <button class="btn ghost" id="resetBtn">Tout remettre à zéro</button>
+      <p class="muted center" style="margin:22px 0 0">Tes révisions et tes enregistrements restent dans ce téléphone. Rien n’est envoyé ailleurs, et personne d’autre ne voit où tu en es.</p>
     </div>
   </section>
 </main>
@@ -108,15 +149,15 @@
 <nav class="tabs" aria-label="Navigation">
   <div class="wrap" role="tablist">
     <button class="tab" role="tab" aria-selected="true" data-go="today">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Aujourd hui</button>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4"/><circle cx="12" cy="12" r="3.6"/></svg>Aujourd’hui</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="drill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M5.5 8v8M18.5 8v8M2.5 11v2M21.5 11v2"/></svg><span id="dueDot" class="dot hidden"></span>Réviser</button>
     <button class="tab" role="tab" aria-selected="false" data-go="themes">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="4" width="17" height="16" rx="2.5"/><path d="M8 4v16"/></svg>Themes</button>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="4" width="17" height="16" rx="2.5"/><path d="M8 4v16"/></svg>Thèmes</button>
     <button class="tab" role="tab" aria-selected="false" data-go="blocks">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3.5" width="8" height="8" rx="1.6"/><rect x="13" y="3.5" width="8" height="8" rx="1.6"/><rect x="3" y="13.5" width="8" height="7" rx="1.6"/><rect x="13" y="13.5" width="8" height="7" rx="1.6"/></svg>Briques</button>
-    <button class="tab" role="tab" aria-selected="false" data-go="drill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M5.5 8v8M18.5 8v8M2.5 11v2M21.5 11v2"/></svg><span id="dueDot" class="dot hidden"></span>Reviser</button>
-    <button class="tab" role="tab" aria-selected="false" data-go="guide">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5.5A2 2 0 0 1 6 3.5h6v17H6a2 2 0 0 0-2 2z"/><path d="M20 5.5a2 2 0 0 0-2-2h-6v17h6a2 2 0 0 1 2 2z"/></svg>Guide</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="progress">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 19h16M6 15l4-5 3 3 5-7"/></svg>Progrès</button>
   </div>
 </nav>
 <!--DATA-->
