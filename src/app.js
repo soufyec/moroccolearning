@@ -13,6 +13,27 @@ VERBES.forEach(v => v.forms.forEach((f,k) => ALL.push(
 MOULES.forEach(m => m.ex.forEach((e,k) => ALL.push(
   { id:m.id+"e"+k, theme:"moules", sub:m.fr, fr:e.fr, phon:e.phon, fp:e.fp, ar:e.ar })));
 const VIRTUELS = { mots:"Les mots", verbes:"Les verbes", moules:"Les moules" };
+const PIECES = { urgence:"le salon", salamat:"l’entrée", premiere:"le salon", politesse:"partout", table:"la table",
+  ecoute:"à entendre", comprendre:"le salon", smalltalk:"le salon", famille:"la maison", maison:"chez eux",
+  sentiments:"le cœur", telephone:"le téléphone", dehors:"dehors", occasions:"la fête", amour:"à deux" };
+/* trajectoire : 8 semaines × 6 séances ; le rythme réel des 14 derniers jours donne la date d’arrivée */
+const PALIERS = [
+  { at:6,  l:"Saluer",     t:"tu salues toute la famille sans Soufyan" },
+  { at:18, l:"Un repas",   t:"tu tiens un repas entier chez sa mère" },
+  { at:30, l:"Une soirée", t:"tu tiens une soirée au salon" },
+  { at:48, l:"Zagora",     t:"tu es prête pour Zagora" }
+];
+function rythme(){
+  let n = 0;
+  for (let i = 0; i < 14; i++){ const h = S.hist[dayKey(Date.now() - i*DAY)]; if (h && (h.r + h.n) > 0) n++; }
+  return n ? n / 2 : 0;   /* séances par semaine, estimées */
+}
+function trajectoire(){
+  const next = PALIERS.find(p => S.sessions < p.at) || null;
+  const r = rythme();
+  const weeks = next ? (r ? Math.max(1, Math.ceil((next.at - S.sessions) / r)) : null) : 0;
+  return { next, r, weeks, pct: Math.min(100, Math.round(100 * S.sessions / 48)) };
+}
 const BY_ID = new Map(ALL.map(i => [i.id, i]));
 const INTERVALS = [0, 1, 2, 5, 12, 30];   /* jours, par boîte Leitner */
 const NAME = "Chloé";
@@ -22,10 +43,11 @@ function load(){
   let s = null;
   try { s = JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e){}
   const d = { srs:{}, lastDay:null, streak:0, best:0, sessions:0, hist:{}, rate:0.8, theme:"auto", script:"fr",
-              notif:{ on:false, time:"19:00" }, motDay:null, motIdx:0, badges:[] };
+              notif:{ on:false, time:"19:00" }, motDay:null, motIdx:0, badges:[], door:true, log:[] };
   const out = Object.assign(d, s || {});
   out.notif = Object.assign({ on:false, time:"19:00" }, out.notif || {});
-  out.hist = out.hist || {}; out.badges = out.badges || [];
+  out.hist = out.hist || {}; out.badges = out.badges || []; out.log = out.log || [];
+  if (out.door === undefined) out.door = true;
   return out;
 }
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
@@ -345,10 +367,12 @@ function paintToday(){
   const vocal = (news.length ? news : shuffle(ALL.filter(i => S.srs[i.id])).slice(0,3)).slice(0,3);
   $("#vocal").innerHTML = vocal.map(phraseCard).join("");
 
-  $("#tiles").innerHTML =
-      tile(h.r + h.n, "aujourd’hui")
-    + tile(S.sessions, "séance" + (S.sessions>1?"s":""))
-    + tile(S.best || 0, "record de jours");
+  /* la phrase du jour : une phrase due, sinon la première nouveauté du plan */
+  const dueList = dueItems();
+  const pd = dueList[0] || news[0] || ALL[0];
+  $("#pday").innerHTML = '<div data-id="' + pd.id + '" style="display:contents">'
+    + '<div><p class="k">La phrase du jour · à entendre</p><p class="phon">' + esc(line(pd)) + '</p><p class="fr">' + esc(pd.fr) + '</p></div>'
+    + '<button class="go" data-act="play" aria-label="Écouter la phrase du jour">' + ICON.play + '</button></div>';
 }
 function paintMot(){
   $("#mot").innerHTML = '<p class="who">Un mot de Zagora</p><p class="txt">' + motDuJour() + '</p>'
@@ -358,10 +382,12 @@ const tile = (v,k) => '<div class="tile"><div class="v">' + v + '</div><div clas
 
 /* -------------------------------------------------------------- thèmes */
 function paintThemes(){
+  let keyN = 0;
   $("#themeList").innerHTML = THEMES.map(t => {
     const n = t.items.length, m = masteredCount(t.items), s = seenCount(t.items);
-    return '<button class="theme' + (t.key ? " key" : "") + '" data-open="' + t.id + '">'
-      + '<span class="name">' + esc(t.name) + (t.key ? ' <span class="tagline">essentiel</span>' : "") + '</span>'
+    return '<button class="theme' + (t.key ? " key k" + (++keyN) : "") + '" data-open="' + t.id + '">'
+      + '<span class="room">' + esc(PIECES[t.id] || "") + (t.key ? ' · essentiel' : "") + '</span>'
+      + '<span class="name">' + esc(t.name) + '</span>'
       + '<span class="desc">' + esc(t.desc) + '</span>'
       + '<span class="meter"><span class="count">' + m + " / " + n + '</span>'
       + '<span class="bar"><i style="width:' + Math.round(100*(s?Math.max(m/n,0.04):0)) + '%"></i></span></span>'
@@ -436,7 +462,7 @@ function paintBlocks(){
 }
 
 /* -------------------------------------------------------------- drills */
-let Q = [], qi = 0, qn = 0, shown = false, gains = { r:0, n:0, ok:0 };
+let Q = [], qi = 0, qn = 0, shown = false, gains = { r:0, n:0, ok:0, ids:[], t0:0, theme:null };
 function startDrill(themeId){
   const due = dueItems();
   const plan = weekPlan();
@@ -446,7 +472,7 @@ function startDrill(themeId){
   } else {
     list = shuffle(due).slice(0, 18).concat(freshFor(plan.themes, due.length < 6 ? 5 : 3));
   }
-  Q = list; qi = 0; qn = list.length; shown = false; gains = { r:0, n:0, ok:0 };
+  Q = list; qi = 0; qn = list.length; shown = false; gains = { r:0, n:0, ok:0, ids:[], t0:Date.now(), theme:themeId || plan.title };
   go("drill"); paintDrill();
 }
 function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
@@ -464,6 +490,12 @@ function paintDrill(){
   }
   if (qi >= Q.length){
     markSession();
+    if (gains.r + gains.n > 0){
+      const tt = VIRTUELS[gains.theme] || (THEMES.find(t => t.id === gains.theme) || {}).name || gains.theme;
+      S.log.push({ d:Date.now(), t:tt, r:gains.r, n:gains.n, ok:gains.ok, ids:gains.ids, ms:Date.now() - gains.t0 });
+      if (S.log.length > 60) S.log.splice(0, S.log.length - 60);
+      save(); gains.r = 0; gains.n = 0;
+    }
     const fresh = checkBadges();
     root.innerHTML = '<div class="finish"><div class="badge-big">' + ICON.star8 + '</div>'
       + '<h1>Séance terminée</h1>'
@@ -522,7 +554,7 @@ function grade(g){
   st.due = Date.now() + (days ? days*DAY : 6e5);
   S.srs[item.id] = st;
   const h = today();
-  if (isNew){ h.n++; gains.n++; } else { h.r++; gains.r++; }
+  if (isNew){ h.n++; gains.n++; if (gains.ids.length < 4) gains.ids.push(item.id); } else { h.r++; gains.r++; }
   if (g === 3){ h.ok++; gains.ok++; }
   save();
   buzz(g === 3 ? 10 : g === 2 ? 20 : 35);
@@ -628,9 +660,35 @@ function paintProgress(){
       + '<span class="t">' + esc(b.t) + '</span><span class="d">' + esc(b.d) + '</span></div>';
   }).join("");
 
+  const tj = trajectoire();
+  const trajT = !tj.next ? "Tu es prête pour Zagora. Continue, pour le plaisir."
+    : tj.weeks ? "Dans <em>" + tj.weeks + " semaine" + (tj.weeks>1?"s":"") + "</em>, " + tj.next.t + "."
+    : "Première séance, et le chemin vers Zagora commence.";
+  const trajS = !tj.next ? "" : !tj.r ? "Six séances par semaine : " + Math.ceil((tj.next.at - S.sessions)/6) + " semaine" + (Math.ceil((tj.next.at - S.sessions)/6)>1?"s":"") + " jusqu’au prochain palier."
+    : tj.r >= 5.5 ? "Ton rythme des deux dernières semaines tient le cap des six séances."
+    : "Rythme actuel : " + (Math.round(tj.r*10)/10).toString().replace(".", ",") + " séances par semaine. À six, tu y es en " + Math.ceil((tj.next.at - S.sessions)/6) + ".";
+  const traj = '<div class="traj"><p class="k">Trajectoire · à ce rythme</p><p class="t">' + trajT + '</p>'
+    + '<div class="line"><span class="rail"></span><span class="fill" style="width:' + tj.pct + '%"></span>'
+    + PALIERS.map(p => '<span class="m' + (S.sessions >= p.at ? " ok" : "") + '" style="left:' + Math.round(100*p.at/48*0.88 + 6) + '%"><i></i>' + p.l + '</span>').join("")
+    + '</div>' + (trajS ? '<p class="s">' + trajS + '</p>' : "") + '</div>';
+
+  const fmtD = ts => { const k = dayKey(ts); return k === dayKey() ? "Aujourd’hui" : k === dayKey(Date.now()-DAY) ? "Hier"
+    : new Date(ts).toLocaleDateString("fr-FR", { weekday:"long", day:"numeric", month:"short" }); };
+  const journal = S.log.slice(-8).reverse().map(e => {
+    const words = (e.ids || []).map(id => BY_ID.get(id)).filter(Boolean).map(i => esc(line(i))).join(" · ");
+    return '<div class="jentry' + (dayKey(e.d) === dayKey() ? " today" : "") + '"><div class="h"><span class="dt">' + fmtD(e.d) + '</span>'
+      + '<span class="dur">' + Math.max(1, Math.round((e.ms||0)/60000)) + ' min</span></div>'
+      + '<div class="c"><div class="t">' + esc(e.t) + '</div>'
+      + '<div class="d">' + e.r + ' revue' + (e.r>1?"s":"") + ' · ' + e.n + ' nouvelle' + (e.n>1?"s":"") + ' · ' + e.ok + ' sans effort</div>'
+      + (words ? '<div class="w">' + words + '</div>' : "") + '</div></div>';
+  }).join("") || '<p class="jempty">Ta première séance écrira la première page.</p>';
+
   $("#progressRoot").innerHTML =
-      '<p class="eyebrow">Ton évolution</p><h1>Où tu en es</h1>'
+      '<p class="eyebrow">Ton évolution</p><h1>Le chemin vers Zagora</h1>'
     + '<p>Chaque séance compte. Voici ce que sa famille entendra la prochaine fois.</p>'
+    + traj
+    + '<div class="section-t"><h2>Le journal</h2><span>' + S.sessions + ' séance' + (S.sessions>1?"s":"") + '</span></div>'
+    + '<div class="journal">' + journal + '</div>'
     + '<div class="prog-head">' + ring + kv + '</div>'
     + '<div class="section-t"><h2>Tes jours de darija</h2><span>' + activeDays + ' jour' + (activeDays>1?"s":"") + ' actifs sur 16 semaines</span></div>'
     + '<div class="heat">' + heat + '</div>'
@@ -756,6 +814,7 @@ function paintGuide(){
   document.querySelectorAll("[data-script]").forEach(b =>
     b.setAttribute("aria-selected", String(b.dataset.script === S.script)));
   $("#rate").value = S.rate;
+  $("#doorOn").checked = !!S.door;
   paintNotif();
 }
 
@@ -801,6 +860,17 @@ $("#themeBtn").addEventListener("click", () => {
   save(); applyTheme();
 });
 $("#rate").addEventListener("input", e => { S.rate = Number(e.target.value); save(); });
+$("#doorOn").addEventListener("change", e => { S.door = e.target.checked; save(); });
+/* la porte : on la touche, elle s’ouvre, et on est chez eux */
+(function(){
+  const d = $("#door");
+  if (!S.door){ d.remove(); return; }
+  $("#doorHi").innerHTML = esc(greeting().d) + ", <em>" + NAME + "</em>";
+  let opened = false;
+  const open = () => { if (opened) return; opened = true; d.classList.add("open"); buzz(8); setTimeout(() => d.remove(), 1300); };
+  d.addEventListener("click", open);
+  d.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") open(); });
+})();
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-script]"); if (!b) return;
   S.script = b.dataset.script; save(); paintGuide(); paintToday();
@@ -818,6 +888,30 @@ $("#notifOn").addEventListener("change", async e => {
 $("#notifTime").addEventListener("change", e => { S.notif.time = e.target.value || "19:00"; save(); Notif.schedule(); Notif.info(); });
 $("#notifTest").addEventListener("click", async () => { await Notif.enable(); Notif.info(); Notif.fire(); });
 $("#icsBtn").addEventListener("click", downloadIcs);
+$("#exportBtn").addEventListener("click", () => {
+  try {
+    const blob = new Blob([JSON.stringify(S)], { type:"application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "dar-darija-" + dayKey() + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    toast("Sauvegarde", "Fichier créé. Garde-le dans Fichiers ou envoie-le-toi par mail.");
+  } catch(e){ toast("Sauvegarde", "Le téléchargement n’a pas marché ici."); }
+});
+$("#importFile").addEventListener("change", e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const d = JSON.parse(r.result);
+      if (!d || typeof d !== "object" || !d.srs) throw 0;
+      if (!confirm("Remplacer ta progression actuelle par celle du fichier ?")) return;
+      localStorage.setItem(KEY, JSON.stringify(d));
+      location.reload();
+    } catch(x){ toast("Restaurer", "Ce fichier n’est pas une sauvegarde Dar Darija."); }
+  };
+  r.readAsText(f);
+  e.target.value = "";
+});
 $("#resetBtn").addEventListener("click", () => {
   if (!confirm("Effacer ta progression et les voix enregistrées ? C’est définitif.")) return;
   Object.keys(S.srs).forEach(k => delete S.srs[k]);

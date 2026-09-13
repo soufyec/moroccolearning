@@ -48,6 +48,13 @@ const html = read("src/index.html")
 fs.mkdirSync("dist", { recursive: true });
 fs.writeFileSync("dist/dar-darija.html", html);
 fs.writeFileSync("dist/index.html", html);
+for (const f of fs.readdirSync("src/icons")) fs.copyFileSync("src/icons/" + f, "dist/" + f);
+fs.writeFileSync("dist/manifest.webmanifest", JSON.stringify({
+  name: "Dar Darija", short_name: "Dar Darija", lang: "fr", start_url: "./", display: "standalone",
+  background_color: "#F7EFE2", theme_color: "#F7EFE2",
+  icons: [{ src: "icon-192.png", sizes: "192x192", type: "image/png" },
+          { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" }]
+}, null, 2));
 
 const n = C.THEMES.reduce((a,t)=>a+t.items.length,0)
   + C.MOTS.reduce((a,c)=>a+c.items.length,0)

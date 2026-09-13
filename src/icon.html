@@ -1,0 +1,39 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Dar Darija — icône</title>
+<style>
+  html,body{margin:0;width:512px;height:512px;overflow:hidden}
+  .ic{
+    position:relative;width:512px;height:512px;overflow:hidden;
+    background:linear-gradient(180deg,#F3E6D2,#E4CBA6);
+    font-family:"Liberation Serif","DejaVu Serif",Georgia,serif;
+  }
+  .ic::before{content:"";position:absolute;inset:0;opacity:.35;background-image:radial-gradient(#D9C3A4 2px,transparent 2.4px);background-size:36px 36px}
+  .frame{position:absolute;left:126px;top:44px;width:260px;height:330px}
+  .arch{position:absolute;inset:-22px -22px 0;border-radius:152px 152px 0 0;background:#EADFCB;border:8px solid #D6C4A6;box-shadow:inset 0 0 0 10px #F7EFE2}
+  .inside{position:absolute;inset:0;border-radius:130px 130px 0 0;background:radial-gradient(ellipse at 50% 30%,#FBE9D6,#F7EFE2 70%)}
+  .leaf{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;box-shadow:inset 0 0 40px rgba(0,0,0,.35)}
+  .leaf.l{left:0;border-radius:130px 0 0 0;background:linear-gradient(90deg,#6E4327,#8A5632)}
+  .leaf.r{right:0;border-radius:0 130px 0 0;background:linear-gradient(90deg,#7A4B2B,#5E3820)}
+  .leaf::before{content:"";position:absolute;left:22px;right:22px;top:40px;height:110px;border:4px solid rgba(255,220,160,.35)}
+  .leaf.l::before{border-radius:70px 0 0 0;border-right:0}
+  .leaf.r::before{border-radius:0 70px 0 0;border-left:0}
+  .leaf::after{content:"";position:absolute;left:22px;right:22px;top:172px;bottom:30px;border:4px solid rgba(255,220,160,.35);border-radius:6px}
+  .leaf.l::after{border-right:0;border-radius:6px 0 0 6px}
+  .leaf.r::after{border-left:0;border-radius:0 6px 6px 0}
+  .stud{position:absolute;top:22px;width:11px;height:11px;border-radius:50%;background:#D9A441}
+  .knob{position:absolute;top:186px;width:40px;height:40px;border-radius:50%;border:6px solid #D9A441;box-shadow:0 3px 8px rgba(0,0,0,.4);box-sizing:border-box}
+  .knob.l{right:8px}.knob.r{left:8px}
+  .sill{position:absolute;left:0;right:0;bottom:0;height:138px;background:linear-gradient(180deg,#B85E3A,#9C4B2B);border-top:8px solid #D9A441;display:flex;align-items:center;justify-content:center}
+  .sill span{color:#FBE9D6;font-size:78px;line-height:1;letter-spacing:.01em;text-shadow:0 2px 6px rgba(0,0,0,.25)}
+  .sill span em{font-style:italic;color:#E6B759}
+</style>
+<div class="ic">
+  <div class="frame">
+    <div class="arch"></div>
+    <div class="inside"></div>
+    <div class="leaf l"><i class="stud" style="left:26px"></i><i class="stud" style="left:80px"></i><span class="knob l"></span></div>
+    <div class="leaf r"><i class="stud" style="right:26px"></i><i class="stud" style="right:80px"></i><span class="knob r"></span></div>
+  </div>
+  <div class="sill"><span>Dar <em>Darija</em></span></div>
+</div>
