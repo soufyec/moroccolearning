@@ -47,6 +47,7 @@ const html = read("src/index.html")
 
 fs.mkdirSync("dist", { recursive: true });
 fs.writeFileSync("dist/dar-darija.html", html);
+fs.writeFileSync("dist/index.html", html);
 
 const n = C.THEMES.reduce((a,t)=>a+t.items.length,0)
   + C.MOTS.reduce((a,c)=>a+c.items.length,0)
